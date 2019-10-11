@@ -1,8 +1,8 @@
 import React from 'react';
 import { hot } from 'react-hot-loader';
 
-import Counter from './components/counter/counter';
-import Form from './components/form/form';
+// import Counter from './components/counter/counter';
+import Dashboard from './components/dashboard/dashboard';
 
 class App extends React.Component {
   constructor() {
@@ -15,9 +15,8 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <Form />
-        Welcome.
-        <Counter message={this.state.message} />
+        <Dashboard />
+
       </div>
     );
   }
