@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Ingredient from './ingredient';
+import Instruction from './instruction';
 // import styles from './style.scss';
 
 class SelectedRecipe extends React.Component {
@@ -53,7 +54,12 @@ class SelectedRecipe extends React.Component {
 
     let servings = <p>Servings: {recipe.servings}</p>
     let ingredients = recipe.ingredients.map((ingredient, ingredientIndex) => {
-        return <Ingredient ingredient={ingredient} ingredientIndex={ingredientIndex}/>
+        return <Ingredient key={ingredientIndex} ingredient={ingredient} ingredientIndex={ingredientIndex}/>
+    });
+
+    let instructions = recipe.instructions.map((instruction, instructionIndex) => {
+        let stepNumber = instructionIndex + 1;
+        return <Instruction key={instructionIndex} instruction={instruction} stepNumber={stepNumber}/>
     });
 
     return (
@@ -66,6 +72,9 @@ class SelectedRecipe extends React.Component {
         <div className="ingredients-container">
             {servings}
             {ingredients}
+        </div>
+        <div className="instructions-container">
+            {instructions}
         </div>
       </div>
     );
