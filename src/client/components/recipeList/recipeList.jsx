@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-
+import RecipeListItem from './recipeListItem';
 // import styles from './style.scss';
 export class Recipe {
     constructor(title, author) {
@@ -36,14 +36,6 @@ class RecipeList extends React.Component {
     }
   }
 
-  //sets each recipe's selected main image to display to index 0
-  initialiseDefaultStateForSelectedImgIndexes(recipes){
-    let selectedImgIndexes = [];
-    recipes.forEach(recipe => {
-        selectedImgIndexes.push(0);
-    });
-    this.setState({selectedImgIndexes: selectedImgIndexes});
-  }
 
   //changes each recipe's main image thumbnail on click
   editDefaultStateForSelectedImgIndexes(recipeIndex, imgIndexToChangeTo){
@@ -54,54 +46,10 @@ class RecipeList extends React.Component {
 
   componentDidMount(){
     this.filterRecipesToShow(this.props.mode);
-    this.initialiseDefaultStateForSelectedImgIndexes(this.props.recipes);
   }
 
-
-  returnRecipeTitle(recipe, recipeIndex){
-    return <h3 key={recipeIndex}>{recipe.title}</h3>;
-  }
-
-  returnMainImgThumbnail(recipe, selectedImgIndex){
-    let MainImgThumbnail = styled.div`
-        background-image: url('${recipe.imgs[selectedImgIndex]}');
-        background-size: cover;
-        width: 200px;
-        height: 200px;
-    `;
-    return <MainImgThumbnail />;
-  }
-
-  returnImgThumbnail(img, imgIndex, recipeIndex){
-    let ImgThumbnail = styled.div`
-        background-image: url('${img}');
-        background-size: cover;
-        width: 50px;
-        height: 50px;
-        display: inline-block;
-    `
-    let imgThumbnail = <ImgThumbnail key={imgIndex} onClick={()=>{this.editDefaultStateForSelectedImgIndexes(recipeIndex, imgIndex)}}/>
-    return imgThumbnail;
-  }
-
-  returnDisplayTags(recipe){
-    let recipeTags = [];
-    recipe.ingredients.map((ingredient, ingredientIndex) => {
-        ingredient.tags.forEach(tag => {
-            if (tag.display === true){
-                recipeTags.push(tag)
-            };
-        });
-    });
-    let displayTags;
-    if (recipeTags === []){
-        displayTags = <p>No public tags</p>
-    } else {
-        displayTags = recipeTags.map((displayTag, displayTagIndex) => {
-            return <p key={displayTagIndex}>{displayTag.name}</p>
-        });
-    };
-    return displayTags;
+  selectRecipeAndChangeMode(recipe, modeToChangeTo){
+    this.props.selectRecipeAndChangeMode(recipe, modeToChangeTo);
   }
 
   render() {
@@ -118,41 +66,14 @@ class RecipeList extends React.Component {
         recipesList = <p>Loading...</p>
     } else {
         recipesList = this.state.currentRecipes.map((recipe, recipeIndex) => {
-            let recipeTitle = this.returnRecipeTitle(recipe, recipeIndex);
-
-            //returns main image thumbnail
-            let mainImgThumbnail;
-            if(this.state.selectedImgIndexes != null){
-                mainImgThumbnail = this.returnMainImgThumbnail(recipe, this.state.selectedImgIndexes[recipeIndex]);
-            } else {
-                mainImgThumbnail = <p>Loading</p>
-            };
-
-            //returns each image thumbnail
-            let imgThumbnails = recipe.imgs.map((img, imgIndex) => {
-                return this.returnImgThumbnail(img, imgIndex, recipeIndex);
-            });
-
-            //filters and returns tag by display === true
-            let displayTags = this.returnDisplayTags(recipe);
-
-            //gives button to see selected recipe in detail
-            let selectButton = <button onClick={()=>{this.props.selectRecipeAndChangeMode(recipe, "selectedRecipe")}}>See More</button>
 
 
-            return <div className="recipe-list-item" key={recipeIndex} style={{width: "600px", height: "500px"}}>
-                        {recipeTitle}
-                        {mainImgThumbnail}
-                        <div className="img-thumbnails-container" style={{width: "600px", height: "100px"}}>
-                            {imgThumbnails}
-                        </div>
-                        <div className="tags-container" style={{height: "100px"}}>
-                            {displayTags}
-                        </div>
-                        <div className="buttons-container">
-                            {selectButton}
-                        </div>
-                    </div>
+
+            return <RecipeListItem
+                        recipe={recipe}
+                        recipeIndex={recipeIndex}
+                        selectRecipeAndChangeMode={(e, e2)=>{this.selectRecipeAndChangeMode(e, e2)}}
+                    />
 
         });
     };

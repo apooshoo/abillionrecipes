@@ -14,27 +14,18 @@ class PageHeader extends React.Component {
     this.props.changeMode(modeToChangeTo);
   }
 
+  revertMode(){
+    this.props.revertMode();
+  }
+
   render() {
     {/* page header = string */}
     let pageHeader = this.props.pageHeader;
 
-    {/* set the mode ( = string ) the back button redirects to in LINE 40*/}
-    let modeToChangeTo;
-    switch (pageHeader) {
-        case "Home":
-            modeToChangeTo = null;
-        break;
-        case "Explore":
-        case "See Yours":
-        case "Create":
-            modeToChangeTo = "dashboard";
-        break;
-    }
-
     {/* call the back button if not Home */}
     let backButton;
-    if (this.props.changeMode != null) {
-        backButton = <button onClick={()=>{this.changeMode(modeToChangeTo)}}>Back</button>
+    if (this.props.revertMode != null) {
+        backButton = <button onClick={()=>{this.revertMode()}}>Back</button>
     }
 
     return (

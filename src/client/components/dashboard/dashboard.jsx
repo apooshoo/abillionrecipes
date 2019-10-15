@@ -15,6 +15,7 @@ class Dashboard extends React.Component {
         //assumes login as userId 1
         userId: 1,
         mode: "dashboard",
+        modeHistory: ["dashboard"],
         //modes: dashboard, explore, see yours, create, selectedRecipe
         selectedRecipe: null,
         //recipes: title (string), recipeId(int), imgs (arr), authorId(int), author (string), servings (string), instructions (arr), ingredients (arr)
@@ -114,12 +115,23 @@ class Dashboard extends React.Component {
 
   changeMode(modeToChangeTo){
     // console.log("modeToChangeTo:", modeToChangeTo);
+    this.setState({modeHistory: [...this.state.modeHistory].concat(this.state.mode)});
     this.setState({mode: modeToChangeTo});
+  }
+
+  revertMode(){
+    console.log(modeHistory)
+    let modeHistory = [...this.state.modeHistory];
+    let prev = modeHistory[modeHistory.length-1];
+    modeHistory.pop();
+    console.log(modeHistory)
+    this.setState({mode: prev, modeHistory: modeHistory});
   }
 
   selectRecipeAndChangeMode(recipe, modeToChangeTo){
     console.log("selecting")
-    this.setState({selectedRecipe: recipe, mode: modeToChangeTo});
+    this.setState({selectedRecipe: recipe});
+    this.changeMode(modeToChangeTo);
   }
 
   componentDidUpdate(){
@@ -132,14 +144,14 @@ class Dashboard extends React.Component {
     switch (this.state.mode) {
         //shows three buttons, explore, see yours and create
         case "dashboard":
-            pageHeader = <PageHeader pageHeader={"Home"} changeMode={null}/>
+            pageHeader = <PageHeader pageHeader={"Home"} revertMode={null}/>
             pageContent = <Home
                             changeMode={(e)=>this.changeMode(e)}
                         />
         break;
         //shows all recipes
         case "explore":
-            pageHeader = <PageHeader pageHeader={"Explore"} changeMode={(e)=>{this.changeMode(e)}}/>
+            pageHeader = <PageHeader pageHeader={"Explore"} revertMode={()=>{this.revertMode()}}/>
             pageContent = <React.Fragment>
                             <SearchBar />
                             <RecipeList recipes={this.state.recipes} mode={this.state.mode} userId={this.state.userId}
@@ -148,7 +160,7 @@ class Dashboard extends React.Component {
                           </React.Fragment>
         break;
         case "see yours":
-            pageHeader = <PageHeader pageHeader={"See Yours"} changeMode={(e)=>{this.changeMode(e)}}/>
+            pageHeader = <PageHeader pageHeader={"See Yours"} revertMode={()=>{this.revertMode()}}/>
             pageContent = <React.Fragment>
                             <SearchBar />
                             <RecipeList recipes={this.state.recipes} mode={this.state.mode} userId={this.state.userId}
@@ -157,11 +169,11 @@ class Dashboard extends React.Component {
                           </React.Fragment>
         break;
         case "create":
-            pageHeader = <PageHeader pageHeader={"Create"} changeMode={(e)=>{this.changeMode(e)}}/>
+            pageHeader = <PageHeader pageHeader={"Create"} revertMode={()=>{this.revertMode()}}/>
             pageContent = <p>Forms Placeholder</p>
         break;
         case "selectedRecipe":
-            pageHeader = <PageHeader pageHeader={this.state.selectedRecipe.title} changeMode={(e)=>{this.changeMode(e)}}/>
+            pageHeader = <PageHeader pageHeader={this.state.selectedRecipe.title}revertMode={()=>{this.revertMode()}}/>
             pageContent = <React.Fragment>
                             <SelectedRecipe recipe={this.state.selectedRecipe}/>
                           </React.Fragment>
