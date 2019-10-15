@@ -44,18 +44,21 @@ class RecipeList extends React.Component {
     this.setState({selectedImgIndexes: selectedImgIndexes});
   }
 
+  //selects and switches to selectedRecipe
+  selectRecipeAndChangeMode(recipe, modeToChangeTo){
+    this.props.selectRecipeAndChangeMode(recipe, modeToChangeTo);
+  }
+
   componentDidMount(){
     this.filterRecipesToShow(this.props.mode);
   }
 
-  selectRecipeAndChangeMode(recipe, modeToChangeTo){
-    this.props.selectRecipeAndChangeMode(recipe, modeToChangeTo);
-  }
 
   render() {
     console.log(this.props)
     // let a = new Recipe('yo', 'yolo');
     // console.log(a)
+
     //recipes: title (string), recipeId(int), imgs (arr), authorId(int), author (string), servings (string), instructions (arr), ingredients (arr)
             //ingredients: name (str), amount(str), tags(arr)
                 //tags: name(str), display(boolean)

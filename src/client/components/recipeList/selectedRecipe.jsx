@@ -1,5 +1,6 @@
 import React from 'react';
-import styled from 'styled-components'
+import styled from 'styled-components';
+import Ingredient from './ingredient';
 // import styles from './style.scss';
 
 class SelectedRecipe extends React.Component {
@@ -45,8 +46,14 @@ class SelectedRecipe extends React.Component {
     let recipe = this.props.recipe;
     let recipeTitle = <h3>{recipe.title}</h3>;
     let mainImgThumbnail = this.returnMainImgThumbnail(recipe, this.state.selectedImgIndex);
+
     let imgThumbnails = recipe.imgs.map((img, imgIndex) => {
         return this.returnImgThumbnail(img, imgIndex);
+    });
+
+    let servings = <p>Servings: {recipe.servings}</p>
+    let ingredients = recipe.ingredients.map((ingredient, ingredientIndex) => {
+        return <Ingredient ingredient={ingredient} ingredientIndex={ingredientIndex}/>
     });
 
     return (
@@ -55,6 +62,10 @@ class SelectedRecipe extends React.Component {
         {mainImgThumbnail}
         <div className="img-thumbnails-container" style={{width: "600px", height: "100px"}}>
             {imgThumbnails}
+        </div>
+        <div className="ingredients-container">
+            {servings}
+            {ingredients}
         </div>
       </div>
     );
