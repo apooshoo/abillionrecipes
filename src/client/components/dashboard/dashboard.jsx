@@ -5,6 +5,7 @@ import PageHeader from '../pageHeader/pageHeader';
 import Home from '../home/home';
 import SearchBar from '../searchBar/searchBar';
 import RecipeList from '../recipeList/recipeList';
+import SelectedRecipe from '../recipeList/selectedRecipe';
 
 // import {Recipe} from '../recipeList/recipeList';
 class Dashboard extends React.Component {
@@ -14,12 +15,15 @@ class Dashboard extends React.Component {
         //assumes login as userId 1
         userId: 1,
         mode: "dashboard",
-        //recipes: title (string), imgs (arr), authorId(int), author (string), servings (string), instructions (arr), ingredients (arr)
+        //modes: dashboard, explore, see yours, create, selectedRecipe
+        selectedRecipe: null,
+        //recipes: title (string), recipeId(int), imgs (arr), authorId(int), author (string), servings (string), instructions (arr), ingredients (arr)
             //ingredients: name (str), amount(str), tags(arr)
                 //tags: name(str), display(boolean)
         recipes: [
             {
                 title: "Omelette",
+                recipeId: 1,
                 imgs: [
                     "https://www.bbcgoodfood.com/sites/default/files/styles/recipe/public/recipe/recipe-image/2017/09/omelette.jpg?itok=7K3AxA-w",
                     "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/delish-how-to-make-an-omelette-horizontal-1542310072.png?crop=0.616xw:0.923xh;0.218xw,0.0281xh&resize=480:*"
@@ -68,6 +72,7 @@ class Dashboard extends React.Component {
             },
             {
                 title: "Home-made Udon Noodles",
+                recipeId: 2,
                 imgs: [
                     "/homemade-udon.jpg",
                     "https://steamykitchen.com/wp-content/uploads/2016/12/homemade-udon-noodles-recipe-morimoto-1-2.jpg",
@@ -112,6 +117,15 @@ class Dashboard extends React.Component {
     this.setState({mode: modeToChangeTo});
   }
 
+  selectRecipeAndChangeMode(recipe, modeToChangeTo){
+    console.log("selecting")
+    this.setState({selectedRecipe: recipe, mode: modeToChangeTo});
+  }
+
+  componentDidUpdate(){
+    console.log(this.state)
+  }
+
   render() {
     let pageHeader;
     let pageContent;
@@ -128,19 +142,29 @@ class Dashboard extends React.Component {
             pageHeader = <PageHeader pageHeader={"Explore"} changeMode={(e)=>{this.changeMode(e)}}/>
             pageContent = <React.Fragment>
                             <SearchBar />
-                            <RecipeList recipes={this.state.recipes} mode={this.state.mode} userId={this.state.userId}/>
+                            <RecipeList recipes={this.state.recipes} mode={this.state.mode} userId={this.state.userId}
+                                selectRecipeAndChangeMode={(e, e2)=>{this.selectRecipeAndChangeMode(e, e2)}}
+                            />
                           </React.Fragment>
         break;
         case "see yours":
             pageHeader = <PageHeader pageHeader={"See Yours"} changeMode={(e)=>{this.changeMode(e)}}/>
             pageContent = <React.Fragment>
                             <SearchBar />
-                            <RecipeList recipes={this.state.recipes} mode={this.state.mode} userId={this.state.userId}/>
+                            <RecipeList recipes={this.state.recipes} mode={this.state.mode} userId={this.state.userId}
+                                selectRecipeAndChangeMode={(e, e2)=>{this.selectRecipeAndChangeMode(e, e2)}}
+                            />
                           </React.Fragment>
         break;
         case "create":
             pageHeader = <PageHeader pageHeader={"Create"} changeMode={(e)=>{this.changeMode(e)}}/>
             pageContent = <p>Forms Placeholder</p>
+        break;
+        case "selectedRecipe":
+            pageHeader = <PageHeader pageHeader={this.state.selectedRecipe.title} changeMode={(e)=>{this.changeMode(e)}}/>
+            pageContent = <React.Fragment>
+                            <SelectedRecipe recipe={this.state.selectedRecipe}/>
+                          </React.Fragment>
         break;
     }
 

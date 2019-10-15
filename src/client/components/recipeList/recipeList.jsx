@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 // import styles from './style.scss';
 export class Recipe {
@@ -14,7 +14,7 @@ class RecipeList extends React.Component {
     super();
     this.state = {
         currentRecipes: null,
-        selectedImgs: null,
+        selectedImgIndexes: null,
     };
   }
 
@@ -37,31 +37,32 @@ class RecipeList extends React.Component {
   }
 
   //sets each recipe's selected main image to display to index 0
-  initialiseDefaultStateForSelectedImgs(recipes){
-    let selectedImgs = [];
+  initialiseDefaultStateForSelectedImgIndexes(recipes){
+    let selectedImgIndexes = [];
     recipes.forEach(recipe => {
-        selectedImgs.push(0);
+        selectedImgIndexes.push(0);
     });
-    this.setState({selectedImgs: selectedImgs});
+    this.setState({selectedImgIndexes: selectedImgIndexes});
   }
 
   //changes each recipe's main image thumbnail on click
-  editDefaultStateForSelectedImgs(recipeIndex, imgIndexToChangeTo){
-    let selectedImgs = [...this.state.selectedImgs];
-    selectedImgs[recipeIndex] = imgIndexToChangeTo;
-    this.setState({selectedImgs: selectedImgs});
+  editDefaultStateForSelectedImgIndexes(recipeIndex, imgIndexToChangeTo){
+    let selectedImgIndexes = [...this.state.selectedImgIndexes];
+    selectedImgIndexes[recipeIndex] = imgIndexToChangeTo;
+    this.setState({selectedImgIndexes: selectedImgIndexes});
   }
 
   componentDidMount(){
     this.filterRecipesToShow(this.props.mode);
-    this.initialiseDefaultStateForSelectedImgs(this.props.recipes);
+    this.initialiseDefaultStateForSelectedImgIndexes(this.props.recipes);
   }
+
 
   returnRecipeTitle(recipe, recipeIndex){
     return <h3 key={recipeIndex}>{recipe.title}</h3>;
   }
 
-  returnMainImgThumbnail(recipe, recipeIndex, selectedImgIndex){
+  returnMainImgThumbnail(recipe, selectedImgIndex){
     let MainImgThumbnail = styled.div`
         background-image: url('${recipe.imgs[selectedImgIndex]}');
         background-size: cover;
@@ -71,7 +72,7 @@ class RecipeList extends React.Component {
     return <MainImgThumbnail />;
   }
 
-  returnImgThumbnail(img, imageIndex, recipeIndex){
+  returnImgThumbnail(img, imgIndex, recipeIndex){
     let ImgThumbnail = styled.div`
         background-image: url('${img}');
         background-size: cover;
@@ -79,7 +80,7 @@ class RecipeList extends React.Component {
         height: 50px;
         display: inline-block;
     `
-    let imgThumbnail = <ImgThumbnail key={imageIndex} onClick={()=>{this.editDefaultStateForSelectedImgs(recipeIndex, imageIndex)}}/>
+    let imgThumbnail = <ImgThumbnail key={imgIndex} onClick={()=>{this.editDefaultStateForSelectedImgIndexes(recipeIndex, imgIndex)}}/>
     return imgThumbnail;
   }
 
@@ -104,11 +105,14 @@ class RecipeList extends React.Component {
   }
 
   render() {
+    console.log(this.props)
     // let a = new Recipe('yo', 'yolo');
     // console.log(a)
-    //recipes: title (string), imgs (arr), authorId(int), author (string), servings (string), instructions (arr), ingredients (arr)
+    //recipes: title (string), recipeId(int), imgs (arr), authorId(int), author (string), servings (string), instructions (arr), ingredients (arr)
             //ingredients: name (str), amount(str), tags(arr)
                 //tags: name(str), display(boolean)
+
+    //MAPS CURRENT RECIPES
     let recipesList;
     if (this.props.recipes === null || this.props.recipes === undefined || this.state.currentRecipes === null) {
         recipesList = <p>Loading...</p>
@@ -118,29 +122,35 @@ class RecipeList extends React.Component {
 
             //returns main image thumbnail
             let mainImgThumbnail;
-            if(this.state.selectedImgs != null){
-                mainImgThumbnail = this.returnMainImgThumbnail(recipe, recipeIndex, this.state.selectedImgs[recipeIndex]);
+            if(this.state.selectedImgIndexes != null){
+                mainImgThumbnail = this.returnMainImgThumbnail(recipe, this.state.selectedImgIndexes[recipeIndex]);
             } else {
                 mainImgThumbnail = <p>Loading</p>
             };
 
             //returns each image thumbnail
-            let imgThumbnails = recipe.imgs.map((img, imageIndex) => {
-                return this.returnImgThumbnail(img, imageIndex, recipeIndex);
+            let imgThumbnails = recipe.imgs.map((img, imgIndex) => {
+                return this.returnImgThumbnail(img, imgIndex, recipeIndex);
             });
 
             //filters and returns tag by display === true
             let displayTags = this.returnDisplayTags(recipe);
 
+            //gives button to see selected recipe in detail
+            let selectButton = <button onClick={()=>{this.props.selectRecipeAndChangeMode(recipe, "selectedRecipe")}}>See More</button>
+
 
             return <div className="recipe-list-item" key={recipeIndex} style={{width: "600px", height: "500px"}}>
                         {recipeTitle}
                         {mainImgThumbnail}
-                        <div style={{width: "600px", height: "100px"}}>
+                        <div className="img-thumbnails-container" style={{width: "600px", height: "100px"}}>
                             {imgThumbnails}
                         </div>
-                        <div style={{height: "100px"}}>
+                        <div className="tags-container" style={{height: "100px"}}>
                             {displayTags}
+                        </div>
+                        <div className="buttons-container">
+                            {selectButton}
                         </div>
                     </div>
 
