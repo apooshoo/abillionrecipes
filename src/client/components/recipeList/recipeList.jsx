@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import RecipeListItem from './recipeListItem';
+import RecipeListItem from './recipeListItem/recipeListItem';
 // import styles from './style.scss';
 export class Recipe {
     constructor(title, author) {

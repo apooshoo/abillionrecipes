@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import Ingredient from './ingredient';
-import Instruction from './instruction';
+import Ingredient from '../ingredient/ingredient';
+import Instruction from '../instruction/instruction';
 // import styles from './style.scss';
 
 class SelectedRecipe extends React.Component {
@@ -70,10 +70,12 @@ class SelectedRecipe extends React.Component {
             {imgThumbnails}
         </div>
         <div className="ingredients-container">
+            <h5>Ingredients</h5>
             {servings}
             {ingredients}
         </div>
         <div className="instructions-container">
+            <h5>Instructions</h5>
             {instructions}
         </div>
       </div>

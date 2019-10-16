@@ -1,11 +1,11 @@
 import React from 'react';
 
-// import styles from './style.scss';
+import styles from './style.scss';
 import PageHeader from '../pageHeader/pageHeader';
 import Home from '../home/home';
 import SearchBar from '../searchBar/searchBar';
 import RecipeList from '../recipeList/recipeList';
-import SelectedRecipe from '../recipeList/selectedRecipe';
+import SelectedRecipe from '../recipeList/selectedRecipe/selectedRecipe';
 
 // import {Recipe} from '../recipeList/recipeList';
 class Dashboard extends React.Component {
@@ -181,12 +181,12 @@ class Dashboard extends React.Component {
     }
 
     return (
-      <div>
+      <div className={styles.page}>
         {/* header = string, backButton = function to change mode */}
-        <div className="page-header">
+        <div className={styles.pageHeader}>
             {pageHeader}
         </div>
-        <div className="page-content">
+        <div className={styles.pageContent}>
             {pageContent}
         </div>
       </div>

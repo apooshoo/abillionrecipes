@@ -1,0 +1,17 @@
+.page{
+	border: 1px solid blue;
+	height: 100vh;
+	padding: 10px;
+	overflow-y: hidden;
+}
+
+.pageHeader{
+	border: 1px solid red;
+	height: 10vh;
+}
+
+.pageContent{
+	border: 1px solid green;
+	height: 80vh;
+	overflow-y: scroll;
+}
