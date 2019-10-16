@@ -8,7 +8,16 @@ class Instruction extends React.Component {
     super();
     this.state = {
         display: true,
+        open: true,
     };
+  }
+
+  toggleOpenAndClose(){
+    this.setState({open: !this.state.open});
+  }
+
+  toggleDisplayAndHide(){
+    this.setState({display: !this.state.display});
   }
 
 
@@ -18,9 +27,10 @@ class Instruction extends React.Component {
 
 
     return (
-      <div className="instruction-step">
-        <p>Step {stepNumber}</p>
-        <p>{instruction}</p>
+      <div className="instruction-step" style={{display: this.state.display ? false : 'none'}}>
+        <span onClick={()=>{this.toggleOpenAndClose()}}>Step {stepNumber}</span>
+        <button onClick={()=>{this.toggleDisplayAndHide()}}>Hide</button>
+        <p style={{display: this.state.open ? false : 'none'}}>{instruction}</p>
       </div>
     );
   }

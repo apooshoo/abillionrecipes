@@ -1,13 +1,23 @@
 import React from 'react';
 import styled from 'styled-components';
 
-// import styles from './style.scss';
+import styles from './style.scss';
 
 class Ingredient extends React.Component {
   constructor() {
     super();
     this.state = {
+        display: true,
+        open: true,
     };
+  }
+
+  toggleOpenAndClose(){
+    this.setState({open: !this.state.open});
+  }
+
+  toggleDisplayAndHide(){
+    this.setState({display: !this.state.display});
   }
 
 
@@ -24,10 +34,13 @@ class Ingredient extends React.Component {
     }
 
     return (
-      <div>
-        <p>Ingredient: {ingredient.name}</p>
-        <p>Amount: {ingredient.amount}</p>
-        {tags}
+      <div className={styles.ingredient} style={{display: this.state.display ? false : 'none'}}>
+        <span onClick={()=>{this.toggleOpenAndClose()}}>Ingredient: {ingredient.name}</span>
+        <button onClick={()=>{this.toggleDisplayAndHide()}}>Hide</button>
+        <div className={styles.collapsibleIngredientData} style={{display: this.state.open ? false : 'none'}}>
+            <p>Amount: {ingredient.amount}</p>
+            {tags}
+        </div>
       </div>
     );
   }
