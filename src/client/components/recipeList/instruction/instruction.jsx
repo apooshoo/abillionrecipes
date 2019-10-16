@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-// import styles from './style.scss';
+import styles from './style.scss';
 
 class Instruction extends React.Component {
   constructor() {
@@ -27,10 +27,10 @@ class Instruction extends React.Component {
 
 
     return (
-      <div className="instruction-step" style={{display: this.state.display ? false : 'none'}}>
-        <span onClick={()=>{this.toggleOpenAndClose()}}>Step {stepNumber}</span>
+      <div className={styles.instruction} style={{display: this.state.display ? false : 'none'}}>
+        <span onClick={()=>{this.toggleOpenAndClose()}} style={{cursor: "pointer"}}>Step {stepNumber}</span>
         <button onClick={()=>{this.toggleDisplayAndHide()}}>Hide</button>
-        <p style={{display: this.state.open ? false : 'none'}}>{instruction}</p>
+        <p className={styles.collapsibleInstructionText} style={{display: this.state.open ? false : 'none'}}>{instruction}</p>
       </div>
     );
   }

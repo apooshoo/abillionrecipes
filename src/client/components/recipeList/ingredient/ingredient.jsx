@@ -35,7 +35,7 @@ class Ingredient extends React.Component {
 
     return (
       <div className={styles.ingredient} style={{display: this.state.display ? false : 'none'}}>
-        <span onClick={()=>{this.toggleOpenAndClose()}}>Ingredient: {ingredient.name}</span>
+        <span onClick={()=>{this.toggleOpenAndClose()}} style={{cursor: "pointer"}}>Ingredient: {ingredient.name}</span>
         <button onClick={()=>{this.toggleDisplayAndHide()}}>Hide</button>
         <div className={styles.collapsibleIngredientData} style={{display: this.state.open ? false : 'none'}}>
             <p>Amount: {ingredient.amount}</p>

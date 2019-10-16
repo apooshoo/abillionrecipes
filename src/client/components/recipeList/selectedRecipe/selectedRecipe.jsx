@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Ingredient from '../ingredient/ingredient';
 import Instruction from '../instruction/instruction';
-// import styles from './style.scss';
+import styles from './style.scss';
 
 class SelectedRecipe extends React.Component {
   constructor() {
@@ -10,7 +10,18 @@ class SelectedRecipe extends React.Component {
     this.state = {
         //default first image
         selectedImgIndex: 0,
+        ingredientsOpen: true,
+        instructionsOpen: true,
     };
+  }
+
+
+  toggleIngredientsOpenAndClose(){
+    this.setState({ingredientsOpen: !this.state.ingredientsOpen});
+  }
+
+  toggleInstructionsOpenAndClose(){
+    this.setState({instructionsOpen: !this.state.instructionsOpen});
   }
 
   changeMode(modeToChangeTo){
@@ -70,13 +81,17 @@ class SelectedRecipe extends React.Component {
             {imgThumbnails}
         </div>
         <div className="ingredients-container">
-            <h5>Ingredients</h5>
-            {servings}
-            {ingredients}
+            <h5 onClick={()=>{this.toggleIngredientsOpenAndClose()}} style={{cursor: "pointer"}}>Ingredients</h5>
+            <div className={styles.collapsibleIngredientsList} style={{display: this.state.ingredientsOpen ? false : 'none'}}>
+                {servings}
+                {ingredients}
+            </div>
         </div>
         <div className="instructions-container">
-            <h5>Instructions</h5>
-            {instructions}
+            <h5 onClick={()=>{this.toggleInstructionsOpenAndClose()}} style={{cursor: "pointer"}}>Instructions</h5>
+            <div className={styles.collapsibleInstructionsList} style={{display: this.state.instructionsOpen ? false : 'none'}}>
+                {instructions}
+            </div>
         </div>
       </div>
     );
