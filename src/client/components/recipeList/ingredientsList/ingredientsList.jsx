@@ -10,7 +10,7 @@ class IngredientsList extends React.Component {
     super();
     this.state = {
         sortByTagsMode: false,
-        columnHeaders: [{name: "eggs", editing: false}, {name: "dry", editing: false}],
+        columnHeaders: [],
         columnHeaderToEdit: null,
     };
   }

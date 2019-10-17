@@ -75,7 +75,7 @@ class Ingredient extends React.Component {
         }
 
         if (columnHeaderIncludedInTags != undefined){
-            ingredientInColumn = <span>{ingredient.name}</span>
+            ingredientInColumn = <span draggable>{ingredient.name}</span>
         } else {
             ingredientInColumn = <span>---</span>
         }

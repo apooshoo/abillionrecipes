@@ -84,14 +84,14 @@ class SelectedRecipe extends React.Component {
         </div>
         <div className="ingredients-container">
             <h5 onClick={()=>{this.toggleIngredientsOpenAndClose()}} style={{cursor: "pointer"}}>Ingredients</h5>
-            <div className={styles.collapsibleIngredientsList} style={{display: this.state.ingredientsOpen ? false : 'none'}}>
+            <div className={styles.collapsibleIngredientsList} style={{display: this.state.ingredientsOpen ? 'block' : 'none'}}>
                 {servings}
                 {ingredients}
             </div>
         </div>
         <div className="instructions-container">
             <h5 onClick={()=>{this.toggleInstructionsOpenAndClose()}} style={{cursor: "pointer"}}>Instructions</h5>
-            <div className={styles.collapsibleInstructionsList} style={{display: this.state.instructionsOpen ? false : 'none'}}>
+            <div className={styles.collapsibleInstructionsList} style={{display: this.state.instructionsOpen ? 'block' : 'none'}}>
                 {instructions}
             </div>
         </div>
