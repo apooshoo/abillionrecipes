@@ -10,7 +10,8 @@ class IngredientsList extends React.Component {
     super();
     this.state = {
         sortByTagsMode: false,
-        columnHeaders: ["eggs", "dry"],
+        columnHeaders: [{name: "eggs", editing: false}, {name: "dry", editing: false}],
+        columnHeaderToEdit: null,
     };
   }
 
@@ -18,8 +19,26 @@ class IngredientsList extends React.Component {
     this.setState({sortByTagsMode: !this.state.sortByTagsMode});
   }
 
-  addColumnHeader(columnHeader){
-    this.setState({columnHeaders: [...this.state.columnHeaders].concat(columnHeader)});
+  addColumnHeader(columnHeader, editing = false){
+    this.setState({columnHeaders: [...this.state.columnHeaders].concat({name: columnHeader, editing: editing})});
+  }
+
+  removeColumnHeader(columnHeaderIndex){
+    let columnHeaders = [...this.state.columnHeaders];
+    columnHeaders.splice(columnHeaderIndex, 1);
+    this.setState({columnHeaders: columnHeaders});
+  }
+
+  selectColumnHeaderToToggleEdit(columnHeaderIndex){
+    let columnHeaders = [...this.state.columnHeaders];
+    columnHeaders[columnHeaderIndex].editing = !columnHeaders[columnHeaderIndex].editing;
+    this.setState({columnHeaders: columnHeaders});
+  }
+
+  editColumnHeader(input, columnHeaderIndex){
+    let columnHeaders = [...this.state.columnHeaders];
+    columnHeaders[columnHeaderIndex].name = input;
+    this.setState({columnHeaders: columnHeaders});
   }
 
   render() {
@@ -38,12 +57,22 @@ class IngredientsList extends React.Component {
         let numberOfColumns = this.state.columnHeaders.length;
         let eachColumnWidthPercent = 100 / numberOfColumns;
         let columnHeaders = this.state.columnHeaders.map((columnHeader, columnHeaderIndex) => {
-            return (
-                <div className="column-header" style={{width: `${eachColumnWidthPercent}%`, backgroundColor: "yellow", display: "inline-block"}} key={columnHeaderIndex}>
-                    <span>{columnHeader}</span>
-                    <FontAwesomeIcon icon="edit"/>
-                </div>
-            )
+            if(columnHeader.editing === false){
+                return (
+                    <div className="column-header" style={{width: `${eachColumnWidthPercent}%`, backgroundColor: "yellow", display: "inline-block"}} key={columnHeaderIndex}>
+                        <span>{columnHeader.name}</span>
+                        <FontAwesomeIcon icon="edit" onClick={()=>{this.selectColumnHeaderToToggleEdit(columnHeaderIndex)}}/>
+                        <FontAwesomeIcon icon="times" onClick={()=>{this.removeColumnHeader(columnHeaderIndex)}}/>
+                    </div>
+                )
+            } else {
+                return (
+                    <div className="column-header" style={{width: `${eachColumnWidthPercent}%`, backgroundColor: "yellow", display: "inline-block"}} key={columnHeaderIndex}>
+                        <input value={columnHeader.name} onChange={()=>{this.editColumnHeader(event.target.value, columnHeaderIndex)}}/>
+                        <FontAwesomeIcon icon="check" onClick={()=>{this.selectColumnHeaderToToggleEdit(columnHeaderIndex)}}/>/>
+                    </div>
+                )
+            }
         });
 
 
@@ -52,7 +81,7 @@ class IngredientsList extends React.Component {
             let ingredientColumns = [...this.state.columnHeaders].map((columnHeader, columnIndex) => {
                 return (
                         <div className="ingredient-column" key={columnIndex} style={{width: `${eachColumnWidthPercent}%`, backgroundColor: "teal", display: "inline-block"}}>
-                            <Ingredient key={ingredientIndex} ingredient={ingredient} ingredientIndex={ingredientIndex} sortByTagsMode={this.state.sortByTagsMode} toggleSortByTagsMode={()=>{this.toggleSortByTagsMode()}} columnHeader={columnHeader}/>
+                            <Ingredient key={ingredientIndex} ingredient={ingredient} ingredientIndex={ingredientIndex} sortByTagsMode={this.state.sortByTagsMode} toggleSortByTagsMode={()=>{this.toggleSortByTagsMode()}} columnHeader={columnHeader.name}/>
                         </div>
                 )
             });
@@ -63,11 +92,12 @@ class IngredientsList extends React.Component {
 
         return(
             <div>
+                <div className="tags-icons-container" style={{width: "100%"}}>
+                    <h5 style={{width: "80%", display: "inline-block"}}>Ingredients By Tags</h5>
+                    <FontAwesomeIcon icon="plus" style={{marginRight: "10%"}} onClick={()=>{this.addColumnHeader("", true)}}/>
+                    <FontAwesomeIcon icon="times" onClick={()=>{this.toggleSortByTagsMode()}}/>
+                </div>
                 <div className="tags-header-container" style={{width: "100%", backgroundColor: "pink", display: "block", position:"relative"}}>
-                    <div className="tags-icons-container" style={{position: "absolute", top: "0", right: "0", width: "10vw", display: "flex", justifyContent: "center"}}>
-                        <FontAwesomeIcon icon="plus" style={{marginRight: "50%"}}/>
-                        <FontAwesomeIcon icon="times" onClick={()=>{this.toggleSortByTagsMode()}}/>
-                    </div>
                     {columnHeaders}
                 </div>
                 <div className="tags-ingredients-container" style={{width: "100%", backgroundColor: "pink", display: "block"}}>
