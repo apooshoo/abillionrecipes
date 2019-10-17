@@ -7,6 +7,7 @@ import SearchBar from '../searchBar/searchBar';
 import RecipeList from '../recipeList/recipeList';
 import SelectedRecipe from '../recipeList/selectedRecipe/selectedRecipe';
 
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 // import {Recipe} from '../recipeList/recipeList';
 class Dashboard extends React.Component {
   constructor() {

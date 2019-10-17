@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 // import styles from './style.scss';
 
 //RETURNS PAGE HEADER AND BACK BUTTON
@@ -25,13 +25,13 @@ class PageHeader extends React.Component {
     {/* call the back button if not Home */}
     let backButton;
     if (this.props.revertMode != null) {
-        backButton = <button onClick={()=>{this.revertMode()}}>Back</button>
+        backButton = <FontAwesomeIcon icon="chevron-left" onClick={()=>{this.revertMode()}} style={{cursor: "pointer"}}/>
     }
 
     return (
       <div>
-        <span>Header: {pageHeader}</span>
         {backButton}
+        <span>Header: {pageHeader}</span>
       </div>
     );
   }

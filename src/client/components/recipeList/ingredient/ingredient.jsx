@@ -27,7 +27,7 @@ class Ingredient extends React.Component {
     let tags;
     if (tags != []){
         tags = ingredient.tags.map((tag, tagIndex) => {
-            return <span>{tag.name}</span>
+            return <span key={tagIndex}>{tag.name}</span>
         });
     } else {
         tags = <p>No tags</p>

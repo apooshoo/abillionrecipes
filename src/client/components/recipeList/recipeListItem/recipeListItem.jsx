@@ -67,11 +67,14 @@ class RecipeListItem extends React.Component {
     let recipeIndex = this.props.recipeIndex;
 
     let recipeTitle = <h3>{recipe.title}</h3>;
+
     let mainImgThumbnail = this.returnMainImgThumbnail(recipe, this.state.selectedImgIndex);
     let imgThumbnails = recipe.imgs.map((img, imgIndex) => {
         return this.returnImgThumbnail(img, imgIndex);
     });
+
     let displayTags = this.returnDisplayTags(recipe);
+
     let selectButton = <button onClick={()=>{this.props.selectRecipeAndChangeMode(recipe, "selectedRecipe")}}>See More</button>
 
     return (

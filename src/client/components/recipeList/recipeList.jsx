@@ -75,6 +75,7 @@ class RecipeList extends React.Component {
             return <RecipeListItem
                         recipe={recipe}
                         recipeIndex={recipeIndex}
+                        key={recipeIndex}
                         selectRecipeAndChangeMode={(e, e2)=>{this.selectRecipeAndChangeMode(e, e2)}}
                     />
 
