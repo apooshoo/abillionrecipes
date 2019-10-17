@@ -20,29 +20,70 @@ class Ingredient extends React.Component {
     this.setState({display: !this.state.display});
   }
 
+  toggleSortByTagsMode(){
+    this.props.toggleSortByTagsMode();
+  }
+
 
   render() {
     let ingredient = this.props.ingredient;
     let ingredientIndex = this.props.ingredientIndex;
     let tags;
-    if (tags != []){
-        tags = ingredient.tags.map((tag, tagIndex) => {
-            return <span key={tagIndex}>{tag.name}</span>
-        });
-    } else {
-        tags = <p>No tags</p>
-    }
 
-    return (
-      <div className={styles.ingredient} style={{display: this.state.display ? false : 'none'}}>
-        <span onClick={()=>{this.toggleOpenAndClose()}} style={{cursor: "pointer"}}>Ingredient: {ingredient.name}</span>
-        <button onClick={()=>{this.toggleDisplayAndHide()}}>Hide</button>
-        <div className={styles.collapsibleIngredientData} style={{display: this.state.open ? false : 'none'}}>
-            <p>Amount: {ingredient.amount}</p>
-            {tags}
-        </div>
-      </div>
-    );
+    if (this.props.sortByTagsMode === false){
+        if (ingredient.tags != []){
+            tags = ingredient.tags.map((tag, tagIndex) => {
+                return <span key={tagIndex} onClick={()=>{this.toggleSortByTagsMode()}}>{tag.name}</span>
+            });
+        } else {
+            tags = <p>No tags</p>
+        };
+
+        return (
+          <div className={styles.ingredient} style={{display: this.state.display ? false : 'none'}}>
+            <span onClick={()=>{this.toggleOpenAndClose()}} style={{cursor: "pointer"}}>Ingredient: {ingredient.name}</span>
+            <button onClick={()=>{this.toggleDisplayAndHide()}}>Hide</button>
+            <div className={styles.collapsibleIngredientData} style={{display: this.state.open ? false : 'none'}}>
+                <p>Amount: {ingredient.amount}</p>
+                {tags}
+            </div>
+          </div>
+        );
+    } else {
+        let ingredientInColumn;
+
+        let columnHeader = this.props.columnHeader;
+
+        let columnHeaderIncludedInTags;
+
+        if (ingredient.tags != []){
+            columnHeaderIncludedInTags = ingredient.tags.find(tag => {
+                return tag.name.trim().toLowerCase() === columnHeader.trim().toLowerCase();
+            });
+        } else {
+            //undefined = failed check
+            columnHeaderIncludedInTags = undefined;
+        }
+
+        if (columnHeaderIncludedInTags != undefined){
+            ingredientInColumn = <span>{ingredient.name}</span>
+        } else {
+            ingredientInColumn = <span>---</span>
+        }
+        // if (ingredient.tags != []){
+        //     tags = ingredient.tags.map((tag, tagIndex) => {
+        //         return <span key={tagIndex} onClick={()=>{this.toggleSortByTagsMode()}}>{tag.name}</span>
+        //     });
+        // } else {
+        //     tags = <p>No tags</p>
+        // };
+
+        return (
+            <React.Fragment>
+                {ingredientInColumn}
+            </React.Fragment>
+        );
+    };
   }
 }
 
