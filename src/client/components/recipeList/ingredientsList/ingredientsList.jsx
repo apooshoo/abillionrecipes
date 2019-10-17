@@ -1,6 +1,8 @@
 import React from 'react';
 import styles from './style.scss';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
 import Ingredient from '../ingredient/ingredient';
 
 class IngredientsList extends React.Component {
@@ -38,7 +40,8 @@ class IngredientsList extends React.Component {
         let columnHeaders = this.state.columnHeaders.map((columnHeader, columnHeaderIndex) => {
             return (
                 <div className="column-header" style={{width: `${eachColumnWidthPercent}%`, backgroundColor: "yellow", display: "inline-block"}} key={columnHeaderIndex}>
-                    <p>{columnHeader}</p>
+                    <span>{columnHeader}</span>
+                    <FontAwesomeIcon icon="edit"/>
                 </div>
             )
         });
@@ -60,7 +63,11 @@ class IngredientsList extends React.Component {
 
         return(
             <div>
-                <div className="tags-header-container" style={{width: "100%", backgroundColor: "pink", display: "block"}}>
+                <div className="tags-header-container" style={{width: "100%", backgroundColor: "pink", display: "block", position:"relative"}}>
+                    <div className="tags-icons-container" style={{position: "absolute", top: "0", right: "0", width: "10vw", display: "flex", justifyContent: "center"}}>
+                        <FontAwesomeIcon icon="plus" style={{marginRight: "50%"}}/>
+                        <FontAwesomeIcon icon="times" onClick={()=>{this.toggleSortByTagsMode()}}/>
+                    </div>
                     {columnHeaders}
                 </div>
                 <div className="tags-ingredients-container" style={{width: "100%", backgroundColor: "pink", display: "block"}}>
