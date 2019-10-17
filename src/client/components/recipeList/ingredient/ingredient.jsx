@@ -24,6 +24,15 @@ class Ingredient extends React.Component {
     this.props.toggleSortByTagsMode();
   }
 
+  addColumnHeader(columnHeader){
+    this.props.addColumnHeader(columnHeader);
+  }
+
+  toggleSortByTagsModeAndAddColumnHeader(columnHeader){
+    this.addColumnHeader(columnHeader);
+    this.toggleSortByTagsMode();
+  }
+
 
   render() {
     let ingredient = this.props.ingredient;
@@ -33,7 +42,7 @@ class Ingredient extends React.Component {
     if (this.props.sortByTagsMode === false){
         if (ingredient.tags != []){
             tags = ingredient.tags.map((tag, tagIndex) => {
-                return <span key={tagIndex} onClick={()=>{this.toggleSortByTagsMode()}}>{tag.name}</span>
+                return <span key={tagIndex} onClick={()=>{this.toggleSortByTagsModeAndAddColumnHeader(tag.name)}}>{tag.name}</span>
             });
         } else {
             tags = <p>No tags</p>

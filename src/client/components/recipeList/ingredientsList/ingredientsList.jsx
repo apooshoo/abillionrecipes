@@ -16,10 +16,14 @@ class IngredientsList extends React.Component {
     this.setState({sortByTagsMode: !this.state.sortByTagsMode});
   }
 
+  addColumnHeader(columnHeader){
+    this.setState({columnHeaders: [...this.state.columnHeaders].concat(columnHeader)});
+  }
+
   render() {
     if (this.state.sortByTagsMode === false){
         let ingredients = this.props.ingredients.map((ingredient, ingredientIndex) => {
-            return <Ingredient key={ingredientIndex} ingredient={ingredient} ingredientIndex={ingredientIndex} sortByTagsMode={this.state.sortByTagsMode} toggleSortByTagsMode={()=>{this.toggleSortByTagsMode()}}/>
+            return <Ingredient key={ingredientIndex} ingredient={ingredient} ingredientIndex={ingredientIndex} sortByTagsMode={this.state.sortByTagsMode} toggleSortByTagsMode={()=>{this.toggleSortByTagsMode()}} addColumnHeader={(e)=>{this.addColumnHeader(e)}}/>
         });
 
         return (
@@ -44,13 +48,13 @@ class IngredientsList extends React.Component {
             //for each ingredient, try to place it in each column
             let ingredientColumns = [...this.state.columnHeaders].map((columnHeader, columnIndex) => {
                 return (
-                        <div className="ingredient-column" style={{width: `${eachColumnWidthPercent}%`, backgroundColor: "teal", display: "inline-block"}}>
+                        <div className="ingredient-column" key={columnIndex} style={{width: `${eachColumnWidthPercent}%`, backgroundColor: "teal", display: "inline-block"}}>
                             <Ingredient key={ingredientIndex} ingredient={ingredient} ingredientIndex={ingredientIndex} sortByTagsMode={this.state.sortByTagsMode} toggleSortByTagsMode={()=>{this.toggleSortByTagsMode()}} columnHeader={columnHeader}/>
                         </div>
                 )
             });
 
-            return <React.Fragment>{ingredientColumns}</React.Fragment>
+            return <React.Fragment key={ingredientIndex}>{ingredientColumns}</React.Fragment>
             // return <Ingredient key={ingredientIndex} ingredient={ingredient} ingredientIndex={ingredientIndex} sortByTagsMode={this.state.sortByTagsMode}/>
         });
 
