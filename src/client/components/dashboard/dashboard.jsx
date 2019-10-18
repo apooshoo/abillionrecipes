@@ -146,13 +146,19 @@ class Dashboard extends React.Component {
 
   addTagToRecipe(recipeIndex, ingredientIndex, tagName, tagDisplay){
     let newTag = new Tag(tagName, tagDisplay);
-    console.log("newTag", newTag);
     let recipes = [...this.state.recipes];
     let recipe = recipes[recipeIndex];
+
+                            //CHANGE THIS WHEN DATABASE IS INCLUDED. Refer instead to relational table:
+                            //search users_recipes for recipe.recipeId where userId = this.state.userId,
+                            //if returns result, user owns this recipe and can edit.
+
+    //if validate user to have permission, allow edit
     if (this.state.userId === recipe.authorId){
         console.log('allow edit');
         recipe.ingredients[ingredientIndex].tags.push(newTag);
         this.setState({recipes: recipes});
+    //else, stop edit and prompt user to save their own editable copy
     } else {
         console.log('do not allow edit, no permission');
         console.log('prompt user to make a save a copy')
