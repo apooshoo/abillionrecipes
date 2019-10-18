@@ -3,7 +3,7 @@ import React from 'react';
 import styles from './style.scss';
 import PageHeader from '../pageHeader/pageHeader';
 import Home from '../home/home';
-import SearchBar from '../searchBar/searchBar';
+// import SearchBar from '../searchBar/searchBar';
 import RecipeList from '../recipeList/recipeList';
 import SelectedRecipe from '../recipeList/selectedRecipe/selectedRecipe';
 
@@ -130,11 +130,9 @@ class Dashboard extends React.Component {
   }
 
   revertMode(){
-    console.log(modeHistory)
     let modeHistory = [...this.state.modeHistory];
     let prev = modeHistory[modeHistory.length-1];
     modeHistory.pop();
-    console.log(modeHistory)
     this.setState({mode: prev, modeHistory: modeHistory});
   }
 
@@ -161,12 +159,12 @@ class Dashboard extends React.Component {
     //else, stop edit and prompt user to save their own editable copy
     } else {
         console.log('do not allow edit, no permission');
-        console.log('prompt user to make a save a copy')
+        console.log('prompt user to make a save a copy');
     }
   }
 
   componentDidUpdate(){
-    console.log(this.state)
+    // console.log(this.state)
   }
 
 
@@ -174,7 +172,7 @@ class Dashboard extends React.Component {
     let pageHeader;
     let pageContent;
     switch (this.state.mode) {
-        //shows three buttons, explore, see yours and create
+        //dashboard shows three buttons, explore, see yours and create
         case "dashboard":
             pageHeader = <PageHeader pageHeader={"Home"} revertMode={null}/>
             pageContent = <Home
@@ -185,16 +183,17 @@ class Dashboard extends React.Component {
         case "explore":
             pageHeader = <PageHeader pageHeader={"Explore"} revertMode={()=>{this.revertMode()}}/>
             pageContent = <React.Fragment>
-                            <SearchBar />
                             <RecipeList recipes={this.state.recipes} mode={this.state.mode} userId={this.state.userId}
                                 selectRecipeAndChangeMode={(e, e2, e3)=>{this.selectRecipeAndChangeMode(e, e2, e3)}}
                             />
                           </React.Fragment>
         break;
+        //shows all recipes where
+            //with database: recipeId is in users_Recipes table (users_Recipes.userId === userId)
+            //without: userId === authorId
         case "see yours":
             pageHeader = <PageHeader pageHeader={"See Yours"} revertMode={()=>{this.revertMode()}}/>
             pageContent = <React.Fragment>
-                            <SearchBar />
                             <RecipeList recipes={this.state.recipes} mode={this.state.mode} userId={this.state.userId}
                                 selectRecipeAndChangeMode={(e, e2, e3)=>{this.selectRecipeAndChangeMode(e, e2, e3)}}
                             />
