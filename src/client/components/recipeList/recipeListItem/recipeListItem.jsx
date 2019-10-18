@@ -75,7 +75,7 @@ class RecipeListItem extends React.Component {
 
     let displayTags = this.returnDisplayTags(recipe);
 
-    let selectButton = <button onClick={()=>{this.props.selectRecipeAndChangeMode(recipe, "selectedRecipe")}}>See More</button>
+    let selectButton = <button onClick={()=>{this.props.selectRecipeAndChangeMode(recipe, recipeIndex, "selectedRecipe")}}>See More</button>
 
     return (
       <div className="recipe-list-item" key={recipeIndex} style={{width: "600px", height: "500px"}}>

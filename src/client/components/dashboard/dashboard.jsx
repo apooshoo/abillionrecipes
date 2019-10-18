@@ -9,6 +9,14 @@ import SelectedRecipe from '../recipeList/selectedRecipe/selectedRecipe';
 
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 // import {Recipe} from '../recipeList/recipeList';
+
+export class Tag {
+    constructor(name, display) {
+        this.name = name;
+        this.display = display;
+    }
+}
+
 class Dashboard extends React.Component {
   constructor() {
     super();
@@ -19,6 +27,7 @@ class Dashboard extends React.Component {
         modeHistory: ["dashboard"],
         //modes: dashboard, explore, see yours, create, selectedRecipe
         selectedRecipe: null,
+        selectedRecipeIndex: null,
         //recipes: title (string), recipeId(int), imgs (arr), authorId(int), author (string), servings (string), instructions (arr), ingredients (arr)
             //ingredients: name (str), amount(str), tags(arr)
                 //tags: name(str), display(boolean)
@@ -129,15 +138,31 @@ class Dashboard extends React.Component {
     this.setState({mode: prev, modeHistory: modeHistory});
   }
 
-  selectRecipeAndChangeMode(recipe, modeToChangeTo){
+  selectRecipeAndChangeMode(recipe, recipeIndex, modeToChangeTo){
     console.log("selecting")
-    this.setState({selectedRecipe: recipe});
+    this.setState({selectedRecipe: recipe, selectedRecipeIndex: recipeIndex});
     this.changeMode(modeToChangeTo);
+  }
+
+  addTagToRecipe(recipeIndex, ingredientIndex, tagName, tagDisplay){
+    let newTag = new Tag(tagName, tagDisplay);
+    console.log("newTag", newTag);
+    let recipes = [...this.state.recipes];
+    let recipe = recipes[recipeIndex];
+    if (this.state.userId === recipe.authorId){
+        console.log('allow edit');
+        recipe.ingredients[ingredientIndex].tags.push(newTag);
+        this.setState({recipes: recipes});
+    } else {
+        console.log('do not allow edit, no permission');
+        console.log('prompt user to make a save a copy')
+    }
   }
 
   componentDidUpdate(){
     console.log(this.state)
   }
+
 
   render() {
     let pageHeader;
@@ -156,7 +181,7 @@ class Dashboard extends React.Component {
             pageContent = <React.Fragment>
                             <SearchBar />
                             <RecipeList recipes={this.state.recipes} mode={this.state.mode} userId={this.state.userId}
-                                selectRecipeAndChangeMode={(e, e2)=>{this.selectRecipeAndChangeMode(e, e2)}}
+                                selectRecipeAndChangeMode={(e, e2, e3)=>{this.selectRecipeAndChangeMode(e, e2, e3)}}
                             />
                           </React.Fragment>
         break;
@@ -165,7 +190,7 @@ class Dashboard extends React.Component {
             pageContent = <React.Fragment>
                             <SearchBar />
                             <RecipeList recipes={this.state.recipes} mode={this.state.mode} userId={this.state.userId}
-                                selectRecipeAndChangeMode={(e, e2)=>{this.selectRecipeAndChangeMode(e, e2)}}
+                                selectRecipeAndChangeMode={(e, e2, e3)=>{this.selectRecipeAndChangeMode(e, e2, e3)}}
                             />
                           </React.Fragment>
         break;
@@ -176,7 +201,11 @@ class Dashboard extends React.Component {
         case "selectedRecipe":
             pageHeader = <PageHeader pageHeader={this.state.selectedRecipe.title}revertMode={()=>{this.revertMode()}}/>
             pageContent = <React.Fragment>
-                            <SelectedRecipe recipe={this.state.selectedRecipe}/>
+                            <SelectedRecipe
+                                recipe={this.state.selectedRecipe}
+                                recipeIndex={this.state.selectedRecipeIndex}
+                                addTagToRecipe={(e1, e2, e3, e4)=>{this.addTagToRecipe(e1, e2, e3, e4)}}
+                            />
                           </React.Fragment>
         break;
     }

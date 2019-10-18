@@ -5,6 +5,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import Ingredient from '../ingredient/ingredient';
 
+
+
 class IngredientsList extends React.Component {
   constructor() {
     super();
@@ -41,6 +43,46 @@ class IngredientsList extends React.Component {
     this.setState({columnHeaders: columnHeaders});
   }
 
+  addTagToRecipe(recipeIndex, ingredientIndex, tagName, tagDisplay){
+    this.props.addTagToRecipe(recipeIndex, ingredientIndex, tagName, tagDisplay);
+  }
+
+  onDragOver(e){
+    e.preventDefault();
+  }
+
+  onDragStart(e, ingredient, ingredientIndex){
+    console.log('dragstart', ingredient);
+    //sets name and content of data in dataTransfer
+    //NOTE TO SELF: dataTransfer ONLY STORES STRINGS, so stringify objects
+    e.dataTransfer.setData("ingredient", JSON.stringify(ingredient));
+    e.dataTransfer.setData("ingredientIndex", ingredientIndex);
+  }
+
+  //can add more parameters to customize if you want, eg: tag public: T/F
+  onDrop(e, columnHeader){
+    let ingredient = JSON.parse(e.dataTransfer.getData("ingredient"));
+    let ingredientIndex = e.dataTransfer.getData("ingredientIndex");
+    console.log('dropping')
+    console.log(ingredient);
+    console.log(ingredientIndex)
+    console.log('header', columnHeader);
+
+    let tagAlreadyAdded = false;
+    let checkForTag = ingredient.tags.forEach(tag => {
+        if (tag.name === columnHeader.name){
+            console.log('tag already present, stop add tag')
+            tagAlreadyAdded = true;
+        };
+    });
+
+    if (tagAlreadyAdded === false){
+        // let newTag = new Tag(columnHeader.name, false);
+        // ingredient.tags.push(newTag);
+        this.addTagToRecipe(this.props.recipeIndex, ingredientIndex, columnHeader.name, false)
+    }
+  }
+
   render() {
     if (this.state.sortByTagsMode === false){
         let ingredients = this.props.ingredients.map((ingredient, ingredientIndex) => {
@@ -59,7 +101,11 @@ class IngredientsList extends React.Component {
         let columnHeaders = this.state.columnHeaders.map((columnHeader, columnHeaderIndex) => {
             if(columnHeader.editing === false){
                 return (
-                    <div className="column-header" style={{width: `${eachColumnWidthPercent}%`, backgroundColor: "yellow", display: "inline-block"}} key={columnHeaderIndex}>
+                    <div className="column-header" style={{width: `${eachColumnWidthPercent}%`, backgroundColor: "yellow", display: "inline-block"}}
+                        key={columnHeaderIndex}
+                        onDragOver={()=>{this.onDragOver(event)}}
+                        onDrop={()=>{this.onDrop(event, columnHeader)}}
+                    >
                         <span>{columnHeader.name}</span>
                         <FontAwesomeIcon icon="edit" onClick={()=>{this.selectColumnHeaderToToggleEdit(columnHeaderIndex)}}/>
                         <FontAwesomeIcon icon="times" onClick={()=>{this.removeColumnHeader(columnHeaderIndex)}}/>
@@ -81,7 +127,12 @@ class IngredientsList extends React.Component {
             let ingredientColumns = [...this.state.columnHeaders].map((columnHeader, columnIndex) => {
                 return (
                         <div className="ingredient-column" key={columnIndex} style={{width: `${eachColumnWidthPercent}%`, backgroundColor: "teal", display: "inline-block"}}>
-                            <Ingredient key={ingredientIndex} ingredient={ingredient} ingredientIndex={ingredientIndex} sortByTagsMode={this.state.sortByTagsMode} toggleSortByTagsMode={()=>{this.toggleSortByTagsMode()}} columnHeader={columnHeader.name}/>
+                            <Ingredient key={ingredientIndex} ingredient={ingredient} ingredientIndex={ingredientIndex}
+                                sortByTagsMode={this.state.sortByTagsMode}
+                                toggleSortByTagsMode={()=>{this.toggleSortByTagsMode()}}
+                                columnHeader={columnHeader.name}
+                                onDragStart={(e, e2, e3)=>{this.onDragStart(e, e2, e3)}}
+                                />
                         </div>
                 )
             });

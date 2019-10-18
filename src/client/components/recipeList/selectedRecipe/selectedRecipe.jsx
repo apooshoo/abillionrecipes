@@ -5,6 +5,8 @@ import IngredientsList from '../ingredientsList/ingredientsList';
 import Instruction from '../instruction/instruction';
 import styles from './style.scss';
 
+
+
 class SelectedRecipe extends React.Component {
   constructor() {
     super();
@@ -57,6 +59,8 @@ class SelectedRecipe extends React.Component {
 
   render() {
     let recipe = this.props.recipe;
+    let recipeIndex = this.props.recipeIndex;
+
     let recipeTitle = <h3>{recipe.title}</h3>;
     let mainImgThumbnail = this.returnMainImgThumbnail(recipe, this.state.selectedImgIndex);
 
@@ -68,7 +72,9 @@ class SelectedRecipe extends React.Component {
     // let ingredients = recipe.ingredients.map((ingredient, ingredientIndex) => {
     //     return <Ingredient key={ingredientIndex} ingredient={ingredient} ingredientIndex={ingredientIndex}/>
     // });
-    let ingredients = <IngredientsList ingredients={recipe.ingredients}/>
+    let ingredients = <IngredientsList ingredients={recipe.ingredients} recipeIndex={recipeIndex}
+                            addTagToRecipe={(e1, e2, e3, e4)=>{this.props.addTagToRecipe(e1, e2, e3, e4)}}
+                        />
 
     let instructions = recipe.instructions.map((instruction, instructionIndex) => {
         let stepNumber = instructionIndex + 1;

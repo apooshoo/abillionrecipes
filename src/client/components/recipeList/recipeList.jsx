@@ -45,8 +45,8 @@ class RecipeList extends React.Component {
   }
 
   //selects and switches to selectedRecipe
-  selectRecipeAndChangeMode(recipe, modeToChangeTo){
-    this.props.selectRecipeAndChangeMode(recipe, modeToChangeTo);
+  selectRecipeAndChangeMode(recipe, recipeIndex, modeToChangeTo){
+    this.props.selectRecipeAndChangeMode(recipe, recipeIndex, modeToChangeTo);
   }
 
   componentDidMount(){
@@ -76,7 +76,7 @@ class RecipeList extends React.Component {
                         recipe={recipe}
                         recipeIndex={recipeIndex}
                         key={recipeIndex}
-                        selectRecipeAndChangeMode={(e, e2)=>{this.selectRecipeAndChangeMode(e, e2)}}
+                        selectRecipeAndChangeMode={(e, e2, e3)=>{this.selectRecipeAndChangeMode(e, e2, e3)}}
                     />
 
         });

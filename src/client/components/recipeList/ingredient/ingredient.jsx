@@ -33,6 +33,9 @@ class Ingredient extends React.Component {
     this.toggleSortByTagsMode();
   }
 
+  onDragStart(e, ingredient, ingredientIndex){
+    this.props.onDragStart(e, ingredient, ingredientIndex);
+  }
 
   render() {
     let ingredient = this.props.ingredient;
@@ -75,7 +78,7 @@ class Ingredient extends React.Component {
         }
 
         if (columnHeaderIncludedInTags != undefined){
-            ingredientInColumn = <span draggable>{ingredient.name}</span>
+            ingredientInColumn = <span draggable onDragStart={()=>{this.onDragStart(event, ingredient, ingredientIndex)}}>{ingredient.name}</span>
         } else {
             ingredientInColumn = <span>---</span>
         }
