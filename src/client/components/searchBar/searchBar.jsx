@@ -20,9 +20,15 @@ class SearchBar extends React.Component {
   }
 
   searchCategoryHandler(e){
+    //reset input when change category
+    //maybe reduce confusion so users always see more being filtered to less.
+    if(this.state.searchInput != ""){
+        this.setState({searchInput: ""});
+    };
+
     let inputValue = e.target.value;
-    console.log(inputValue)
     this.setState({searchCategory: inputValue});
+
   }
 
   filterCurrentRecipesBySearch(searchInputValue, searchCategory){
