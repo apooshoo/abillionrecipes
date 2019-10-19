@@ -7,6 +7,8 @@ import Home from '../home/home';
 import RecipeList from '../recipeList/recipeList';
 import SelectedRecipe from '../recipeList/selectedRecipe/selectedRecipe';
 
+import CreateForm from '../createForms/createForm/createForm';
+
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 // import {Recipe} from '../recipeList/recipeList';
 
@@ -23,6 +25,7 @@ class Dashboard extends React.Component {
     this.state = {
         //assumes login as userId 1
         userId: 1,
+        username: 'Jonathan',
         mode: "dashboard",
         modeHistory: ["dashboard"],
         //modes: dashboard, explore, see yours, create, selectedRecipe
@@ -201,7 +204,7 @@ class Dashboard extends React.Component {
         break;
         case "create":
             pageHeader = <PageHeader pageHeader={"Create"} revertMode={()=>{this.revertMode()}}/>
-            pageContent = <p>Forms Placeholder</p>
+            pageContent = <CreateForm userId={this.state.userId} username={this.state.username}/>
         break;
         case "selectedRecipe":
             pageHeader = <PageHeader pageHeader={this.state.selectedRecipe.title}revertMode={()=>{this.revertMode()}}/>
