@@ -6,12 +6,13 @@ import InstructionForm from '../instructionForm/instructionForm';
 
 //let recipeId be decided by the database so there wont be conflict. for now, set recipeId in addRecipe()
 export class Recipe {
-    constructor(title, authorId, author, servings, ingredients, recipeId = null) {
+    constructor(title, authorId, author, servings, ingredients, instructions, recipeId = null) {
         this.title = title,
         this.authorId = authorId,
         this.author = author,
         this.servings = servings,
-        this.ingredients = ingredients
+        this.ingredients = ingredients,
+        this.instructions = instructions
     }
 }
 
@@ -21,6 +22,13 @@ export class Ingredient {
         this.amount = amount,
         this.tags = tags,
         this.done = done
+    }
+}
+
+export class Error {
+    constructor(category, text){
+        this.category = category,
+        this.text = text
     }
 }
 
@@ -81,8 +89,7 @@ class CreateForm extends React.Component {
 // }
 
   createRecipe(){
-    let newRecipe = new Recipe(this.state.titleInput, this.props.userId, this.props.username, this.state. servingsInput, this.state.ingredientsInput);
-
+    let newRecipe = new Recipe(this.state.titleInput, this.props.userId, this.props.username, this.state.servingsInput, [...this.state.ingredientsInput], [...this.state.instructionsInput]);
     return newRecipe;
   }
 
@@ -91,7 +98,6 @@ class CreateForm extends React.Component {
   }
 
   createAndAddRecipe(){
-    console.log('adding and saving')
     this.addRecipe(this.createRecipe());
   }
 
@@ -145,8 +151,10 @@ class CreateForm extends React.Component {
             <span>Add Instruction</span>
           </div>
 
-          <FontAwesomeIcon icon="check" onClick={()=>{this.createAndAddRecipe()}} style={{cursor: "pointer"}}/>
-          <span>Save Recipe</span>
+          <div>
+              <FontAwesomeIcon icon="check" onClick={()=>{this.createAndAddRecipe()}} style={{cursor: "pointer"}}/>
+              <span>Save Recipe</span>
+          </div>
       </div>
     );
   }

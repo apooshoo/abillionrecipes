@@ -14,8 +14,16 @@ import CreateForm from '../createForms/createForm/createForm';
 
 export class Tag {
     constructor(name, display) {
-        this.name = name;
-        this.display = display;
+        this.name = name,
+        this.display = display
+    }
+}
+
+
+export class Error {
+    constructor(category, text){
+        this.category = category,
+        this.text = text
     }
 }
 
@@ -123,6 +131,7 @@ class Dashboard extends React.Component {
                 ]
             }
         ],
+        errors: [],
     };
   }
 
@@ -166,14 +175,124 @@ class Dashboard extends React.Component {
     }
   }
 
-  addRecipe(recipe){
-    let newRecipe = recipe;
-    let recipes = [...this.state.recipes];
-    //for now, without database, set recipeId here
-    let newRecipeId = recipes.length + 1;
-    newRecipe.recipeId = newRecipeId;
+// export class Error {
+//     constructor(category, text){
+//         this.category = category,
+//         this.text = text,
+//     }
+// }
 
-    this.setState({recipes: recipes.concat(newRecipe)});
+  validateInputs(recipeToAdd){
+    // console.log("VALIDATING RECIPE", recipeToAdd)
+    let errors = [null, null, null, null, null]
+
+    //////////////////////////////////////////////////Validate Title
+        //check if title already exists
+    let titleAlreadyExistsBoolean = false;
+    [...this.state.recipes].forEach(recipeInDatabase => {
+        if (recipeInDatabase.title.trim().toLowerCase() === recipeToAdd.title.trim().toLowerCase()){
+            titleAlreadyExistsBoolean = true;
+        };
+    });
+    //title
+    if (recipeToAdd.title.length < 3){
+        errors[0] = new Error("title", "Title must have at least 3 characters.");
+    //already exists
+    } else if (titleAlreadyExistsBoolean === true){
+        errors[0] = new Error("title", "A recipe by that title already exists.");
+    } else {
+        errors[0] = null;
+    };
+    //////////////////////////////////////////////////Validate Title
+
+    //////////////////////////////////////////////////Validate Servings
+    if (recipeToAdd.servings.length < 1){
+        errors[1] = new Error("servings", "Servings field is empty");
+    };
+    //////////////////////////////////////////////////Validate Servings
+
+    //////////////////////////////////////////////////Validate Ingredients
+    //check if ingredients empty
+    if (recipeToAdd.ingredients === []){
+        errors[2] = new Error("ingredients", "Recipes must at least one ingredient.");
+    } else {
+        recipeToAdd.ingredients.forEach((ingredient, ingredientIndex) => {
+            //check tags
+            //note: not required in add, but in case of edit
+            if (ingredient.tags != []){
+                ingredient.tags.forEach((tag, tagIndex) => {
+                    if (tag.name.length < 1){
+                        errors[3] = new Error("tags", "Tag name field is empty");
+                        console.log('tag name error')
+                    } else {
+                        errors[3] = null;
+                        console.log('no tag error')
+                    }
+                });
+            };
+
+            if(ingredient.name.length < 1){
+                errors[2] = new Error("ingredients", "Ingredient name field is empty");
+            } else if (ingredient.amount.length < 1){
+                errors[2] = new Error("ingredients", "Ingredient amount field is empty");
+            } else {
+                errors[2] = null;
+            };
+        });
+    };
+    //////////////////////////////////////////////////Validate Ingredients
+
+    //////////////////////////////////////////////////Validate Instructions
+    if (recipeToAdd.instructions === []){
+        errors[4] = new Error("instructions", "Recipes must at least one instruction.")
+        console.log('empty instructions error')
+    } else {
+        recipeToAdd.instructions.forEach((instruction, instructionIndex) => {
+            if (instruction.length < 1){
+                errors[4] = new Error("instructions", "Instruction field is empty");
+                console.log('instruction error')
+            };
+        });
+    };
+    //////////////////////////////////////////////////Validate Instructions
+
+    console.log(errors)
+    let errorCount = 0;
+    errors.forEach(error => {
+        if (error != null){
+            errorCount += 1;
+        };
+    });
+    if(errorCount === 0 ){
+        return true;
+    } else {
+        return false;
+    }
+  }
+//   export class Recipe {
+//     constructor(title, authorId, author, servings, ingredients, recipeId = null) {
+//         this.title = title,
+//         this.authorId = authorId,
+//         this.author = author,
+//         this.servings = servings,
+//         this.ingredients = ingredients
+//     }
+// }
+
+  addRecipe(recipe){
+    let proceedWithAddRecipe = this.validateInputs(recipe); //returns true or false
+    if (proceedWithAddRecipe === true){
+        let newRecipe = recipe;
+        let recipes = [...this.state.recipes];
+        //for now, without database, set recipeId here
+        let newRecipeId = recipes.length + 1;
+        newRecipe.recipeId = newRecipeId;
+
+        this.setState({recipes: recipes.concat(newRecipe)});
+    } else {
+        console.log('aborting add recipe');
+        //highlight errors?
+    };
   }
 
   componentDidUpdate(){
@@ -182,7 +301,7 @@ class Dashboard extends React.Component {
 
 
   render() {
-    console.log(this.state.recipes)
+    // console.log(this.state.recipes)
     let pageHeader;
     let pageContent;
     switch (this.state.mode) {
