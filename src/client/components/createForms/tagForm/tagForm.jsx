@@ -30,6 +30,11 @@ class TagForm extends React.Component {
             <input id={"tag-name-input"} value={tag.name} onChange={()=>{this.updateTagsInput(tagIndex, "name", event.target.value)}}/>
         </div>
 
+        <div>
+            <label htmlFor={"tag-display-input"}>Make Public</label>
+            <input id={"tag-display-input"} type={"checkBox"} value={tag.display} onChange={()=>{this.updateTagsInput(tagIndex, "display", !tag.display)}}/>
+        </div>
+
       </div>
     );
   }

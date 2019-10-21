@@ -3,12 +3,7 @@ import styled from 'styled-components';
 import RecipeListItem from './recipeListItem/recipeListItem';
 import SearchBar from '../searchBar/searchBar';
 // import styles from './style.scss';
-export class Recipe {
-    constructor(title, author) {
-        this.title = title;
-        this.author = author;
-    }
-}
+
 
 class RecipeList extends React.Component {
   constructor() {

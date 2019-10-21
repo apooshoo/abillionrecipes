@@ -166,12 +166,23 @@ class Dashboard extends React.Component {
     }
   }
 
+  addRecipe(recipe){
+    let newRecipe = recipe;
+    let recipes = [...this.state.recipes];
+    //for now, without database, set recipeId here
+    let newRecipeId = recipes.length + 1;
+    newRecipe.recipeId = newRecipeId;
+
+    this.setState({recipes: recipes.concat(newRecipe)});
+  }
+
   componentDidUpdate(){
     // console.log(this.state)
   }
 
 
   render() {
+    console.log(this.state.recipes)
     let pageHeader;
     let pageContent;
     switch (this.state.mode) {
@@ -204,7 +215,11 @@ class Dashboard extends React.Component {
         break;
         case "create":
             pageHeader = <PageHeader pageHeader={"Create"} revertMode={()=>{this.revertMode()}}/>
-            pageContent = <CreateForm userId={this.state.userId} username={this.state.username}/>
+            pageContent = <CreateForm
+                            userId={this.state.userId}
+                            username={this.state.username}
+                            addRecipe={(e)=>{this.addRecipe(e)}}
+                            />
         break;
         case "selectedRecipe":
             pageHeader = <PageHeader pageHeader={this.state.selectedRecipe.title}revertMode={()=>{this.revertMode()}}/>

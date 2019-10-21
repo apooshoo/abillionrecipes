@@ -1,7 +1,15 @@
 import React from 'react';
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 // import styles from './style.scss';
 import TagForm from '../tagForm/tagForm';
+
+export class Tag {
+    constructor(name, display, done) {
+        this.name = name,
+        this.display = display,
+        this.done = done
+    }
+}
 
 //RETURNS PAGE HEADER AND BACK BUTTON
 class IngredientForm extends React.Component {
@@ -21,6 +29,12 @@ class IngredientForm extends React.Component {
     tagsInput[tagIndex][tagCategory] = inputValue;
 
     this.setState({tagsInput: tagsInput});
+  }
+
+  addTag(){
+    let newTag = new Tag("", false, false);
+    let tagsInput = [...this.state.tagsInput];
+    this.setState({tagsInput: tagsInput.concat(newTag)});
   }
 
 
@@ -53,6 +67,8 @@ class IngredientForm extends React.Component {
 
         <div>
             {tagsList}
+            <FontAwesomeIcon icon="plus" onClick={()=>{this.addTag()}} style={{cursor: "pointer"}}/>
+            <span>Add Tag</span>
         </div>
 
       </div>
