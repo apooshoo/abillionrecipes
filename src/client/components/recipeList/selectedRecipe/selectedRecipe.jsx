@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import IngredientsList from '../ingredientsList/ingredientsList';
 import Instruction from '../instruction/instruction';
 import styles from './style.scss';
+import {Image, Video, Transformation, CloudinaryContext} from 'cloudinary-react';
 
 
 
@@ -31,25 +32,31 @@ class SelectedRecipe extends React.Component {
     this.props.changeMode(modeToChangeTo);
   }
   returnMainImgThumbnail(recipe, selectedImgIndex){
-    let MainImgThumbnail = styled.div`
-        background-image: url('${recipe.imgs[selectedImgIndex]}');
-        background-size: cover;
-        width: 200px;
-        height: 200px;
-    `;
-    return <MainImgThumbnail />;
+    // let MainImgThumbnail = styled.div`
+    //     background-image: url('${recipe.imgs[selectedImgIndex]}');
+    //     background-size: cover;
+    //     width: 200px;
+    //     height: 200px;
+    // `;
+    // return <MainImgThumbnail />;
+    return <Image cloudName="moggle93" publicId={recipe.imgs[selectedImgIndex]}>
+                <Transformation width="200" height="200" crop="limit"/>
+            </Image>
   }
 
   returnImgThumbnail(img, imgIndex){
-    let ImgThumbnail = styled.div`
-        background-image: url('${img}');
-        background-size: cover;
-        width: 50px;
-        height: 50px;
-        display: inline-block;
-    `
-    let imgThumbnail = <ImgThumbnail key={imgIndex} onClick={()=>{this.editDefaultStateForSelectedImgIndex(imgIndex)}}/>
-    return imgThumbnail;
+    // let ImgThumbnail = styled.div`
+    //     background-image: url('${img}');
+    //     background-size: cover;
+    //     width: 50px;
+    //     height: 50px;
+    //     display: inline-block;
+    // `
+    // let imgThumbnail = <ImgThumbnail key={imgIndex} onClick={()=>{this.editDefaultStateForSelectedImgIndex(imgIndex)}}/>
+    // return imgThumbnail;
+    return <Image cloudName="moggle93" publicId={img} key={imgIndex} onClick={()=>{this.editDefaultStateForSelectedImgIndex(imgIndex)}}>
+                <Transformation  width="50" height="50" crop="scale"/>
+            </Image>
   }
 
   editDefaultStateForSelectedImgIndex(imgIndex){

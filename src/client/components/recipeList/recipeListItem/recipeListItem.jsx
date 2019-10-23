@@ -19,25 +19,31 @@ class RecipeListItem extends React.Component {
     this.props.changeMode(modeToChangeTo);
   }
   returnMainImgThumbnail(recipe, selectedImgIndex){
-    let MainImgThumbnail = styled.div`
-        background-image: url('${recipe.imgs[selectedImgIndex]}');
-        background-size: cover;
-        width: 200px;
-        height: 200px;
-    `;
-    return <MainImgThumbnail />;
+    // let MainImgThumbnail = styled.div`
+    //     background-image: url('${recipe.imgs[selectedImgIndex]}');
+    //     background-size: cover;
+    //     width: 200px;
+    //     height: 200px;
+    // `;
+    // return <MainImgThumbnail />;
+    return <Image cloudName="moggle93" publicId={recipe.imgs[selectedImgIndex]}>
+                <Transformation width="200" height="200" crop="limit"/>
+            </Image>
   }
 
   returnImgThumbnail(img, imgIndex){
-    let ImgThumbnail = styled.div`
-        background-image: url('${img}');
-        background-size: cover;
-        width: 50px;
-        height: 50px;
-        display: inline-block;
-    `
-    let imgThumbnail = <ImgThumbnail key={imgIndex} onClick={()=>{this.editDefaultStateForSelectedImgIndex(imgIndex)}}/>
-    return imgThumbnail;
+    // let ImgThumbnail = styled.div`
+    //     background-image: url('${img}');
+    //     background-size: cover;
+    //     width: 50px;
+    //     height: 50px;
+    //     display: inline-block;
+    // `
+    // let imgThumbnail = <ImgThumbnail key={imgIndex} onClick={()=>{this.editDefaultStateForSelectedImgIndex(imgIndex)}}/>
+    // return imgThumbnail;
+    return <Image cloudName="moggle93" publicId={img} key={imgIndex} onClick={()=>{this.editDefaultStateForSelectedImgIndex(imgIndex)}}>
+                <Transformation  width="50" height="50" crop="scale"/>
+            </Image>
   }
 
   editDefaultStateForSelectedImgIndex(imgIndex){
@@ -58,7 +64,7 @@ class RecipeListItem extends React.Component {
         displayTags = <p>No public tags</p>
     } else {
         displayTags = recipeTags.map((displayTag, displayTagIndex) => {
-            return <p key={displayTagIndex}>{displayTag.name}</p>
+            return <span key={displayTagIndex}>{displayTag.name}</span>
         });
     };
     return displayTags;
@@ -80,13 +86,14 @@ class RecipeListItem extends React.Component {
     let selectButton = <button onClick={()=>{this.props.selectRecipeAndChangeMode(recipe, recipeIndex, "selectedRecipe")}}>See More</button>
 
     return (
-      <div className="recipe-list-item" key={recipeIndex} style={{width: "600px", height: "500px"}}>
+      <div className="recipe-list-item" key={recipeIndex} style={{width: "600px", height: "350px"}}>
         {recipeTitle}
         {mainImgThumbnail}
-        <div className="img-thumbnails-container" style={{width: "600px", height: "100px"}}>
+        <div className="img-thumbnails-container" style={{width: "600px", height: "60px"}}>
             {imgThumbnails}
         </div>
-        <div className="tags-container" style={{height: "100px"}}>
+        <div className="tags-container" style={{height: "30px"}}>
+            <span>Tags: </span>
             {displayTags}
         </div>
         <div className="buttons-container">

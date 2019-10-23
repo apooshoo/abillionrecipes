@@ -47,8 +47,8 @@ class Dashboard extends React.Component {
                 title: "Omelette",
                 recipeId: 1,
                 imgs: [
-                    "https://www.bbcgoodfood.com/sites/default/files/styles/recipe/public/recipe/recipe-image/2017/09/omelette.jpg?itok=7K3AxA-w",
-                    "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/delish-how-to-make-an-omelette-horizontal-1542310072.png?crop=0.616xw:0.923xh;0.218xw,0.0281xh&resize=480:*"
+                    "omelette1_tdhhc1",
+                    "omelette2_snquv6"
                 ],
                 authorId: 1,
                 author: "Jonathan",
@@ -96,9 +96,10 @@ class Dashboard extends React.Component {
                 title: "Home-made Udon Noodles",
                 recipeId: 2,
                 imgs: [
-                    "/homemade-udon.jpg",
-                    "https://steamykitchen.com/wp-content/uploads/2016/12/homemade-udon-noodles-recipe-morimoto-1-2.jpg",
-                    "https://steamykitchen.com/wp-content/uploads/2016/12/homemade-udon-noodles-recipe-morimoto-4.jpg"
+                    "udon1_hsniaa",
+                    "udon2_c1bbth",
+                    "udon3_pibw5b",
+                    "udon4_mbxpev"
                     ],
                 authorId: 2,
                 author: "Masaharu Morimoto",

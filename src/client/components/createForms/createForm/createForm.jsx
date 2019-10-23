@@ -9,8 +9,9 @@ import {Image, Video, Transformation, CloudinaryContext} from 'cloudinary-react'
 
 //let recipeId be decided by the database so there wont be conflict. for now, set recipeId in addRecipe()
 export class Recipe {
-    constructor(title, authorId, author, servings, ingredients, instructions, recipeId = null) {
+    constructor(title, imgs, authorId, author, servings, ingredients, instructions, recipeId = null) {
         this.title = title,
+        this.imgs = imgs,
         this.authorId = authorId,
         this.author = author,
         this.servings = servings,
@@ -40,6 +41,7 @@ class CreateForm extends React.Component {
     super();
     this.state = {
         titleInput: "",
+        imgsInput: [],
         servingsInput: "",
         ingredientsInput: [{name: "", amount: "", tags: [], done: false}],
         instructionsInput: [""],
@@ -93,7 +95,7 @@ class CreateForm extends React.Component {
 // }
 
   createRecipe(){
-    let newRecipe = new Recipe(this.state.titleInput, this.props.userId, this.props.username, this.state.servingsInput, [...this.state.ingredientsInput], [...this.state.instructionsInput]);
+    let newRecipe = new Recipe(this.state.titleInput, this.state.imgsInput, this.props.userId, this.props.username, this.state.servingsInput, [...this.state.ingredientsInput], [...this.state.instructionsInput]);
     return newRecipe;
   }
 
@@ -105,42 +107,54 @@ class CreateForm extends React.Component {
     this.addRecipe(this.createRecipe());
   }
 
+  //BLOODY BUGGED!
+  //Seems to crop properly, but always uploads the un-cropped picture anyway
   createWidget(){
     let myWidget = window.cloudinary.createUploadWidget({
       cloudName: 'moggle93',
       uploadPreset: 'jmiuat3r',
       sources: ['local', 'url', 'camera', 'facebook', 'instagram'],
+      multiple: false,
+      cropping: true,
+      showSkipCropButton: false,
+      croppingShowDimensions: true,
+      maxImageFileSize: 4000000,
+      croppingAspectRatio: 1,
+      // croppingCoordinatesMode: 'custom',
+      // customCoordinates:
       },
       (error, result) => {
         if (!error && result && result.event === "success") {
             console.log('result:', result);
             console.log('Done! Here is the image info: ', result.info);
+            this.setState({imgsInput: [...this.state.imgsInput].concat(result.info.public_id)});
+            //if there is a database, save and then setState upon success
+        } else if (error){
+            console.log(error)
+            console.log(result)
+            alert("Upload failed!")
         }
       }
-    )
-    return <div>
-            <button id="upload_widget" onClick={()=>this.openWidget(myWidget)}>Upload files</button>
-          </div>
+    );
+    //max 4 imgs, then remove upload option
+    if ([...this.state.imgsInput].length <= 3){
+        return <div>
+                <button id="upload_widget" onClick={()=>this.openWidget(myWidget)}>Upload files</button>
+              </div>
+    };
   }
 
   openWidget(widget){
     widget.open();
-    // cloudinary.open()
-    // let myWidget = window.cloudinary.openUploadWidget({
-    //   cloudName: 'moggle93',
-    //   uploadPreset: 'jmiuat3r',
-    //   sources: ['local', 'url', 'camera', 'facebook', 'instagram'],
-    //   },
-    //   (error, result) => {
-    //     if (!error && result && result.event === "success") {
-    //         console.log('result:', result);
-    //         console.log('Done! Here is the image info: ', result.info);
-    //     }
-    //   }
-    // )
   }
 
   render() {
+    let imgsInputList = [...this.state.imgsInput].map((img, imgIndex) => {
+        return <Image cloudName="moggle93" publicId={img} >
+                    <Transformation width="200" height="200" crop="scale" />
+                </Image>
+    });
+
     let ingredientsInputList = [...this.state.ingredientsInput].map((ingredient, ingredientIndex) => {
         return <IngredientForm key={ingredientIndex}
                     //give base data, all manipulation handled in IngredientForm
@@ -173,6 +187,10 @@ class CreateForm extends React.Component {
           <div>
             <label htmlFor={"title-input"}>Recipe Title: </label>
             <input id={"title-input"} placeholder={"eg. Mom's Spaghetti"} value={this.state.titleInput} onChange={()=>{this.titleInputHandler(event)}}/>
+          </div>
+
+          <div>
+            {imgsInputList}
           </div>
 
           {this.createWidget()}
