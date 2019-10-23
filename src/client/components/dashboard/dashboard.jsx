@@ -340,6 +340,7 @@ class Dashboard extends React.Component {
                             addRecipe={(e)=>{this.addRecipe(e)}}
                             />
         break;
+        //displays a recipe when you select from above
         case "selectedRecipe":
             pageHeader = <PageHeader pageHeader={this.state.selectedRecipe.title}revertMode={()=>{this.revertMode()}}/>
             pageContent = <React.Fragment>

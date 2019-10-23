@@ -11,7 +11,7 @@ class RecipeList extends React.Component {
     this.state = {
         currentRecipes: null,
         sortedCurrentRecipes: null,
-        showSortedRecipes: false, //true or false to show if searching or not
+        showSortedRecipes: false, //true or false to show if searching or not. may not be required
 
         selectedImgIndexes: null,
     };
