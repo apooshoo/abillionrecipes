@@ -3,6 +3,8 @@ import styled from 'styled-components';
 
 // import styles from './style.scss';
 
+import {Image, Video, Transformation, CloudinaryContext} from 'cloudinary-react';
+
 class RecipeListItem extends React.Component {
   constructor() {
     super();

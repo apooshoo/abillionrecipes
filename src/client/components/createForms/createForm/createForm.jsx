@@ -4,6 +4,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import IngredientForm from '../ingredientForm/ingredientForm';
 import InstructionForm from '../instructionForm/instructionForm';
 
+import {Image, Video, Transformation, CloudinaryContext} from 'cloudinary-react';
+
+
 //let recipeId be decided by the database so there wont be conflict. for now, set recipeId in addRecipe()
 export class Recipe {
     constructor(title, authorId, author, servings, ingredients, instructions, recipeId = null) {
@@ -42,6 +45,7 @@ class CreateForm extends React.Component {
         instructionsInput: [""],
     };
   }
+
 
   titleInputHandler(e){
     this.setState({titleInput: e.target.value});
@@ -101,6 +105,40 @@ class CreateForm extends React.Component {
     this.addRecipe(this.createRecipe());
   }
 
+  createWidget(){
+    let myWidget = window.cloudinary.createUploadWidget({
+      cloudName: 'moggle93',
+      uploadPreset: 'jmiuat3r',
+      sources: ['local', 'url', 'camera', 'facebook', 'instagram'],
+      },
+      (error, result) => {
+        if (!error && result && result.event === "success") {
+            console.log('result:', result);
+            console.log('Done! Here is the image info: ', result.info);
+        }
+      }
+    )
+    return <div>
+            <button id="upload_widget" onClick={()=>this.openWidget(myWidget)}>Upload files</button>
+          </div>
+  }
+
+  openWidget(widget){
+    widget.open();
+    // cloudinary.open()
+    // let myWidget = window.cloudinary.openUploadWidget({
+    //   cloudName: 'moggle93',
+    //   uploadPreset: 'jmiuat3r',
+    //   sources: ['local', 'url', 'camera', 'facebook', 'instagram'],
+    //   },
+    //   (error, result) => {
+    //     if (!error && result && result.event === "success") {
+    //         console.log('result:', result);
+    //         console.log('Done! Here is the image info: ', result.info);
+    //     }
+    //   }
+    // )
+  }
 
   render() {
     let ingredientsInputList = [...this.state.ingredientsInput].map((ingredient, ingredientIndex) => {
@@ -122,6 +160,9 @@ class CreateForm extends React.Component {
                 />
     });
 
+
+
+
     return (
       <div className="create-form">
           <div>
@@ -133,6 +174,8 @@ class CreateForm extends React.Component {
             <label htmlFor={"title-input"}>Recipe Title: </label>
             <input id={"title-input"} placeholder={"eg. Mom's Spaghetti"} value={this.state.titleInput} onChange={()=>{this.titleInputHandler(event)}}/>
           </div>
+
+          {this.createWidget()}
 
           <div>
             <label htmlFor={"servings-input"}>Serving size: </label>

@@ -76,6 +76,7 @@
     "airbnb-browser-shims": ">=3.1.0",
     "babel-polyfill": ">=6.26.0",
     "body-parser": ">=1.18.3",
+    "cloudinary-react": "^1.2.1",
     "compression": ">=1.7.3",
     "cookie-parser": "^1.4.4",
     "eslint-config-airbnb": ">=17.1.0",
