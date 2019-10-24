@@ -37,9 +37,14 @@ class SearchBar extends React.Component {
 
   render() {
     return (
-      <div>
-        <input value={this.state.searchInput} onChange={()=>{this.searchInputHandler(event)}}/>
-        <select onChange={()=>{this.searchCategoryHandler(event)}}>
+      <div className="row">
+        <div className="input-group col-9 px-1">
+            <div className="input-group-prepend">
+                <span className="input-group-text">Search</span>
+            </div>
+            <input className="form-control" value={this.state.searchInput} onChange={()=>{this.searchInputHandler(event)}}/>
+        </div>
+        <select className="form-control col-3" onChange={()=>{this.searchCategoryHandler(event)}}>
             <option value={"title"}>Title</option>
             <option value={"ingredient"}>Ingredient</option>
             <option value={"tag"}>Tag</option>

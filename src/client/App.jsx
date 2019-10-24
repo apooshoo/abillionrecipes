@@ -5,11 +5,11 @@ import { hot } from 'react-hot-loader';
 import Dashboard from './components/dashboard/dashboard';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fab } from '@fortawesome/free-brands-svg-icons'
-import { faChevronLeft, faPlus, faTimes, faEdit, faCheck } from '@fortawesome/free-solid-svg-icons'
+import { faChevronLeft, faPlus, faMinus, faTimes, faEdit, faCheck, faAngleDown, faAngleLeft } from '@fortawesome/free-solid-svg-icons'
 // import { faCheckSquare, faCoffee } from '@fortawesome/free-solid-svg-icons'
 
 // library.add(fab, faCheckSquare, faCoffee)
-library.add(fab, faChevronLeft, faPlus, faTimes, faEdit, faCheck)
+library.add(fab, faChevronLeft, faPlus, faMinus, faTimes, faEdit, faCheck, faAngleDown, faAngleLeft)
 
 class App extends React.Component {
   constructor() {
@@ -21,9 +21,8 @@ class App extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="container-fluid">
         <Dashboard />
-
       </div>
     );
   }

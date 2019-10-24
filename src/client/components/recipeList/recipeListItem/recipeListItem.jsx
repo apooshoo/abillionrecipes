@@ -18,18 +18,7 @@ class RecipeListItem extends React.Component {
   changeMode(modeToChangeTo){
     this.props.changeMode(modeToChangeTo);
   }
-  returnMainImgThumbnail(recipe, selectedImgIndex){
-    // let MainImgThumbnail = styled.div`
-    //     background-image: url('${recipe.imgs[selectedImgIndex]}');
-    //     background-size: cover;
-    //     width: 200px;
-    //     height: 200px;
-    // `;
-    // return <MainImgThumbnail />;
-    return <Image cloudName="moggle93" publicId={recipe.imgs[selectedImgIndex]}>
-                <Transformation width="200" height="200" crop="limit"/>
-            </Image>
-  }
+
 
   returnImgThumbnail(img, imgIndex){
     // let ImgThumbnail = styled.div`
@@ -74,30 +63,34 @@ class RecipeListItem extends React.Component {
     let recipe = this.props.recipe;
     let recipeIndex = this.props.recipeIndex;
 
-    let recipeTitle = <h3>{recipe.title}</h3>;
+    let mainImgThumbnail = <Image cloudName="moggle93" publicId={recipe.imgs[this.state.selectedImgIndex]}
+                                onClick={()=>{this.props.selectRecipeAndChangeMode(recipe, recipeIndex, "selectedRecipe")}}
+                                style={{cursor: "pointer"}}
+                                >
+                                <Transformation width="200" height="200" crop="scale"/>
+                            </Image>
 
-    let mainImgThumbnail = this.returnMainImgThumbnail(recipe, this.state.selectedImgIndex);
     let imgThumbnails = recipe.imgs.map((img, imgIndex) => {
         return this.returnImgThumbnail(img, imgIndex);
     });
 
     let displayTags = this.returnDisplayTags(recipe);
 
-    let selectButton = <button onClick={()=>{this.props.selectRecipeAndChangeMode(recipe, recipeIndex, "selectedRecipe")}}>See More</button>
 
     return (
-      <div className="recipe-list-item" key={recipeIndex} style={{width: "600px", height: "350px"}}>
-        {recipeTitle}
-        {mainImgThumbnail}
-        <div className="img-thumbnails-container" style={{width: "600px", height: "60px"}}>
-            {imgThumbnails}
-        </div>
-        <div className="tags-container" style={{height: "30px"}}>
-            <span>Tags: </span>
-            {displayTags}
-        </div>
-        <div className="buttons-container">
-            {selectButton}
+      <div className="col-12 col-sm-6 col-md-4 col-lg-3" key={recipeIndex} style={{height: "350px"}}>
+        <div className="card text-center">
+        <div className="card-header" style={{cursor: "pointer"}}>{recipe.title}</div>
+            <div className="card-body">
+                {mainImgThumbnail}
+                <div className="img-thumbnails-container">
+                    {imgThumbnails}
+                </div>
+            </div>
+            <div className="card-footer text-muted text-left">
+                <span>Tags: </span>
+                {displayTags}
+            </div>
         </div>
       </div>
     );

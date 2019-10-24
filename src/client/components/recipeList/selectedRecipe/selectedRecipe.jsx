@@ -5,6 +5,8 @@ import IngredientsList from '../ingredientsList/ingredientsList';
 import Instruction from '../instruction/instruction';
 import styles from './style.scss';
 import {Image, Video, Transformation, CloudinaryContext} from 'cloudinary-react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
 
 
 
@@ -31,18 +33,7 @@ class SelectedRecipe extends React.Component {
   changeMode(modeToChangeTo){
     this.props.changeMode(modeToChangeTo);
   }
-  returnMainImgThumbnail(recipe, selectedImgIndex){
-    // let MainImgThumbnail = styled.div`
-    //     background-image: url('${recipe.imgs[selectedImgIndex]}');
-    //     background-size: cover;
-    //     width: 200px;
-    //     height: 200px;
-    // `;
-    // return <MainImgThumbnail />;
-    return <Image cloudName="moggle93" publicId={recipe.imgs[selectedImgIndex]}>
-                <Transformation width="200" height="200" crop="limit"/>
-            </Image>
-  }
+
 
   returnImgThumbnail(img, imgIndex){
     // let ImgThumbnail = styled.div`
@@ -55,7 +46,7 @@ class SelectedRecipe extends React.Component {
     // let imgThumbnail = <ImgThumbnail key={imgIndex} onClick={()=>{this.editDefaultStateForSelectedImgIndex(imgIndex)}}/>
     // return imgThumbnail;
     return <Image cloudName="moggle93" publicId={img} key={imgIndex} onClick={()=>{this.editDefaultStateForSelectedImgIndex(imgIndex)}}>
-                <Transformation  width="50" height="50" crop="scale"/>
+                <Transformation  width="75" height="75" crop="scale"/>
             </Image>
   }
 
@@ -68,14 +59,17 @@ class SelectedRecipe extends React.Component {
     let recipe = this.props.recipe;
     let recipeIndex = this.props.recipeIndex;
 
-    let recipeTitle = <h3>{recipe.title}</h3>;
-    let mainImgThumbnail = this.returnMainImgThumbnail(recipe, this.state.selectedImgIndex);
+    let mainImgThumbnail = <Image cloudName="moggle93" publicId={recipe.imgs[this.state.selectedImgIndex]}
+                                onClick={()=>{this.props.selectRecipeAndChangeMode(recipe, recipeIndex, "selectedRecipe")}}
+                                style={{cursor: "pointer"}}
+                                >
+                                <Transformation width="300" height="300" crop="scale"/>
+                            </Image>
 
     let imgThumbnails = recipe.imgs.map((img, imgIndex) => {
         return this.returnImgThumbnail(img, imgIndex);
     });
 
-    let servings = <p>Servings: {recipe.servings}</p>
     // let ingredients = recipe.ingredients.map((ingredient, ingredientIndex) => {
     //     return <Ingredient key={ingredientIndex} ingredient={ingredient} ingredientIndex={ingredientIndex}/>
     // });
@@ -89,23 +83,33 @@ class SelectedRecipe extends React.Component {
     });
 
     return (
-      <div className="selected-recipe">
-        {recipeTitle}
-        {mainImgThumbnail}
-        <div className="img-thumbnails-container" style={{width: "600px", height: "100px"}}>
-            {imgThumbnails}
-        </div>
-        <div className="ingredients-container">
-            <h5 onClick={()=>{this.toggleIngredientsOpenAndClose()}} style={{cursor: "pointer"}}>Ingredients</h5>
-            <div className={styles.collapsibleIngredientsList} style={{display: this.state.ingredientsOpen ? 'block' : 'none'}}>
-                {servings}
-                {ingredients}
+      <div className="selected-recipe row">
+        <div className="col-12 col-md-4 text-center" style={{paddingTop: "10px"}}>
+            {mainImgThumbnail}
+            <div className="img-thumbnails-container">
+                {imgThumbnails}
             </div>
         </div>
-        <div className="instructions-container">
-            <h5 onClick={()=>{this.toggleInstructionsOpenAndClose()}} style={{cursor: "pointer"}}>Instructions</h5>
-            <div className={styles.collapsibleInstructionsList} style={{display: this.state.instructionsOpen ? 'block' : 'none'}}>
-                {instructions}
+        <div className="col-12 col-md-8 overflow-auto">
+            <div class="shadow-sm p-3 mb-1 bg-white rounded">{recipe.title}</div>
+            <div class="shadow-sm p-3 mb-1 bg-white rounded">Servings: {recipe.servings}</div>
+            <div className="ingredients-container">
+                <div class="shadow-sm p-3 mb-2 bg-white rounded">
+                    <span className="mr-4">Ingredients</span>
+                    <FontAwesomeIcon icon={this.state.ingredientsOpen? "angle-down" : "angle-left"} onClick={()=>{this.toggleIngredientsOpenAndClose()}} style={{cursor: "pointer"}}/>
+                </div>
+                <div style={{display: this.state.ingredientsOpen ? 'block' : 'none'}}>
+                    {ingredients}
+                </div>
+            </div>
+            <div className="instructions-container">
+                <div class="shadow-sm p-3 mb-1 bg-white rounded">
+                    <span className="mr-4">Instructions</span>
+                    <FontAwesomeIcon icon={this.state.instructionsOpen? "angle-down" : "angle-left"} onClick={()=>{this.toggleInstructionsOpenAndClose()}} style={{cursor: "pointer"}}/>
+                </div>
+                <div style={{display: this.state.instructionsOpen ? 'block' : 'none'}}>
+                    {instructions}
+                </div>
             </div>
         </div>
       </div>

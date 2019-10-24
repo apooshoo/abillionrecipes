@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import styles from './style.scss';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 class Ingredient extends React.Component {
   constructor() {
     super();
@@ -45,18 +45,21 @@ class Ingredient extends React.Component {
     if (this.props.sortByTagsMode === false){
         if (ingredient.tags != []){
             tags = ingredient.tags.map((tag, tagIndex) => {
-                return <span key={tagIndex} onClick={()=>{this.toggleSortByTagsModeAndAddColumnHeader(tag.name)}}>{tag.name}</span>
+                return <span className="badge badge-pill badge-light font-weight-light" key={tagIndex} onClick={()=>{this.toggleSortByTagsModeAndAddColumnHeader(tag.name)}} style={{cursor: "pointer"}}>{tag.name}</span>
             });
         } else {
-            tags = <p>No tags</p>
+            tags = <span>~</span>
         };
 
         return (
-          <div className={styles.ingredient} style={{display: this.state.display ? false : 'none'}}>
-            <span onClick={()=>{this.toggleOpenAndClose()}} style={{cursor: "pointer"}}>Ingredient: {ingredient.name}</span>
-            <button onClick={()=>{this.toggleDisplayAndHide()}}>Hide</button>
-            <div className={styles.collapsibleIngredientData} style={{display: this.state.open ? false : 'none'}}>
-                <p>Amount: {ingredient.amount}</p>
+          <div className="shadow-sm p-3 mb-1 pl-5 bg-white rounded" style={{display: this.state.display ? false : 'none'}}>
+            <span>{ingredient.name}</span>
+            <FontAwesomeIcon className="mx-5" icon={this.state.open ? "angle-down" : "angle-left"} onClick={()=>{this.toggleOpenAndClose()}} style={{cursor: "pointer"}}/>
+            <FontAwesomeIcon icon="times" onClick={()=>{this.toggleDisplayAndHide()}} style={{cursor: "pointer"}}/>
+            <hr/>
+            <div style={{display: this.state.open ? false : 'none'}}>
+                <p style={{marginBottom: "0px"}}>Amount: {ingredient.amount}</p>
+                <span>Tags: </span>
                 {tags}
             </div>
           </div>

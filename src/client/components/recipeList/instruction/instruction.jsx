@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import styles from './style.scss';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 class Instruction extends React.Component {
   constructor() {
@@ -27,10 +28,12 @@ class Instruction extends React.Component {
 
 
     return (
-      <div className={styles.instruction} style={{display: this.state.display ? false : 'none'}}>
-        <span onClick={()=>{this.toggleOpenAndClose()}} style={{cursor: "pointer"}}>Step {stepNumber}</span>
-        <button onClick={()=>{this.toggleDisplayAndHide()}}>Hide</button>
-        <p className={styles.collapsibleInstructionText} style={{display: this.state.open ? false : 'none'}}>{instruction}</p>
+      <div className="shadow-sm p-3 mb-1 pl-5 bg-white rounded" style={{display: this.state.display ? false : 'none'}}>
+        <span   >Step {stepNumber}</span>
+        <FontAwesomeIcon className="mx-5" icon={this.state.open ? "angle-down" : "angle-left"} onClick={()=>{this.toggleOpenAndClose()}} style={{cursor: "pointer"}}/>
+        <FontAwesomeIcon icon="times" onClick={()=>{this.toggleDisplayAndHide()}} style={{cursor: "pointer"}}/>
+        <hr/>
+        <p style={{display: this.state.open ? false : 'none'}}>{instruction}</p>
       </div>
     );
   }

@@ -348,19 +348,19 @@ class Dashboard extends React.Component {
                             <SelectedRecipe
                                 recipe={this.state.selectedRecipe}
                                 recipeIndex={this.state.selectedRecipeIndex}
-                                addTagToRecipe={(e1, e2, e3, e4)=>{this.addTagToRecipe(e1, e2, e3, e4)}}
+                               addTagToRecipe={(e1, e2, e3, e4)=>{this.addTagToRecipe(e1, e2, e3, e4)}}
                             />
                           </React.Fragment>
         break;
     }
 
     return (
-      <div className={styles.page}>
+      <div className="row overflow-hidden" style={{height: "100vh", padding: "10px"}}>
         {/* header = string, backButton = function to change mode */}
-        <div className={styles.pageHeader}>
+        <div className="col-12" style={{height: "10vh"}}>
             {pageHeader}
         </div>
-        <div className={styles.pageContent}>
+        <div className="col-12 overflow-auto" style={{height: "80vh"}}>
             {pageContent}
         </div>
       </div>

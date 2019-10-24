@@ -138,9 +138,15 @@ class RecipeList extends React.Component {
     };
 
     return (
-      <div className="recipe-list">
-        <SearchBar filterCurrentRecipesBySearch={(e1, e2)=>{this.filterCurrentRecipesBySearch(e1, e2)}}/>
-        {recipesList}
+      <div className="recipe-list row">
+        <div className="col-8 offset-2 d-flex justify-content-center">
+            <SearchBar filterCurrentRecipesBySearch={(e1, e2)=>{this.filterCurrentRecipesBySearch(e1, e2)}}/>
+        </div>
+        <div className="col-12">
+            <div className="row">
+                {recipesList}
+            </div>
+        </div>
       </div>
     );
   }
