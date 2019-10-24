@@ -37,7 +37,7 @@ class SearchBar extends React.Component {
 
   render() {
     return (
-      <div className="row">
+      <div className="row shadow-sm py-1 mb-2 bg-white rounded">
         <div className="input-group col-9 px-1">
             <div className="input-group-prepend">
                 <span className="input-group-text">Search</span>

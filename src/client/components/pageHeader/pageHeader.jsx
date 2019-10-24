@@ -30,11 +30,11 @@ class PageHeader extends React.Component {
 
     return (
       <div className="row">
-        <div className="col-1">
+        <div className="ml-5">
             {backButton}
         </div>
-        <div className="col-5 offset-4">
-            <span>Header: {pageHeader}</span>
+        <div className="mx-auto">
+            <span>{pageHeader}</span>
         </div>
       </div>
     );

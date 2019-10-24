@@ -30,7 +30,7 @@ class RecipeListItem extends React.Component {
     // `
     // let imgThumbnail = <ImgThumbnail key={imgIndex} onClick={()=>{this.editDefaultStateForSelectedImgIndex(imgIndex)}}/>
     // return imgThumbnail;
-    return <Image cloudName="moggle93" publicId={img} key={imgIndex} onClick={()=>{this.editDefaultStateForSelectedImgIndex(imgIndex)}}>
+    return <Image cloudName="moggle93" publicId={img} key={imgIndex} onClick={()=>{this.editDefaultStateForSelectedImgIndex(imgIndex)}} style={{cursor: "pointer"}}>
                 <Transformation  width="50" height="50" crop="scale"/>
             </Image>
   }
@@ -79,7 +79,7 @@ class RecipeListItem extends React.Component {
 
     return (
       <div className="col-12 col-sm-6 col-md-4 col-lg-3" key={recipeIndex} style={{height: "350px"}}>
-        <div className="card text-center">
+        <div className="card text-center shadow bg-white rounded">
         <div className="card-header" style={{cursor: "pointer"}}>{recipe.title}</div>
             <div className="card-body">
                 {mainImgThumbnail}

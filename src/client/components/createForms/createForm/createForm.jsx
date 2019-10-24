@@ -179,7 +179,7 @@ class CreateForm extends React.Component {
 
     return (
         <div className="row">
-          <div className="create-form col-8 offset-2 col-md-6 offset-md-3">
+          <div className="create-form col-10 offset-1 col-md-6 offset-md-3">
 
               <div className="input-group">
                 <div className="input-group-prepend">

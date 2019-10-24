@@ -45,12 +45,13 @@ class SelectedRecipe extends React.Component {
     // `
     // let imgThumbnail = <ImgThumbnail key={imgIndex} onClick={()=>{this.editDefaultStateForSelectedImgIndex(imgIndex)}}/>
     // return imgThumbnail;
-    return <Image cloudName="moggle93" publicId={img} key={imgIndex} onClick={()=>{this.editDefaultStateForSelectedImgIndex(imgIndex)}}>
+    return <Image cloudName="moggle93" publicId={img} key={imgIndex} onClick={()=>{this.editDefaultStateForSelectedImgIndex(imgIndex)}} style={{cursor: "pointer"}}>
                 <Transformation  width="75" height="75" crop="scale"/>
             </Image>
   }
 
   editDefaultStateForSelectedImgIndex(imgIndex){
+    console.log('click')
     this.setState({selectedImgIndex: imgIndex});
   }
 
@@ -60,7 +61,6 @@ class SelectedRecipe extends React.Component {
     let recipeIndex = this.props.recipeIndex;
 
     let mainImgThumbnail = <Image cloudName="moggle93" publicId={recipe.imgs[this.state.selectedImgIndex]}
-                                onClick={()=>{this.props.selectRecipeAndChangeMode(recipe, recipeIndex, "selectedRecipe")}}
                                 style={{cursor: "pointer"}}
                                 >
                                 <Transformation width="300" height="300" crop="scale"/>

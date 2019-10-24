@@ -144,7 +144,7 @@ class IngredientsList extends React.Component {
         return(
             <div>
                 <div className="tags-icons-container" style={{width: "100%"}}>
-                    <h5 style={{width: "80%", display: "inline-block"}}>Ingredients By Tags</h5>
+                    <span className="pl-3" style={{width: "80%", display: "inline-block"}}>Ingredients By Tags</span>
                     <FontAwesomeIcon icon="plus" style={{marginRight: "10%"}} onClick={()=>{this.addColumnHeader("", true)}}/>
                     <FontAwesomeIcon icon="times" onClick={()=>{this.toggleSortByTagsMode()}}/>
                 </div>
