@@ -91,10 +91,10 @@ class SelectedRecipe extends React.Component {
             </div>
         </div>
         <div className="col-12 col-md-8 overflow-auto">
-            <div class="shadow-sm p-3 mb-1 bg-white rounded">{recipe.title}</div>
-            <div class="shadow-sm p-3 mb-1 bg-white rounded">Servings: {recipe.servings}</div>
+            <div className="shadow-sm p-3 mb-1 bg-white rounded">{recipe.title}</div>
+            <div className="shadow-sm p-3 mb-1 bg-white rounded">Servings: {recipe.servings}</div>
             <div className="ingredients-container">
-                <div class="shadow-sm p-3 mb-2 bg-white rounded">
+                <div className="shadow-sm p-3 mb-2 bg-white rounded">
                     <span className="mr-4">Ingredients</span>
                     <FontAwesomeIcon icon={this.state.ingredientsOpen? "angle-down" : "angle-left"} onClick={()=>{this.toggleIngredientsOpenAndClose()}} style={{cursor: "pointer"}}/>
                 </div>
@@ -103,7 +103,7 @@ class SelectedRecipe extends React.Component {
                 </div>
             </div>
             <div className="instructions-container">
-                <div class="shadow-sm p-3 mb-1 bg-white rounded">
+                <div className="shadow-sm p-3 mb-1 bg-white rounded">
                     <span className="mr-4">Instructions</span>
                     <FontAwesomeIcon icon={this.state.instructionsOpen? "angle-down" : "angle-left"} onClick={()=>{this.toggleInstructionsOpenAndClose()}} style={{cursor: "pointer"}}/>
                 </div>

@@ -184,8 +184,8 @@ class Dashboard extends React.Component {
 // }
 
   validateInputs(recipeToAdd){
-    // console.log("VALIDATING RECIPE", recipeToAdd)
-    let errors = [null, null, null, null, null]
+    console.log("VALIDATING RECIPE", recipeToAdd)
+    let errors = [null, null, null, null, null, null]
 
     //////////////////////////////////////////////////Validate Title
         //check if title already exists
@@ -256,6 +256,14 @@ class Dashboard extends React.Component {
         });
     };
     //////////////////////////////////////////////////Validate Instructions
+
+    //////////////////////////////////////////////////Validate Imgs
+    if(recipeToAdd.imgs.length < 1){
+        errors[5] = new Error("imgs", "Recipes must have at least one image")
+        console.log('empty imgs error');
+    };
+
+    //////////////////////////////////////////////////Validate Imgs
 
     console.log(errors)
     let errorCount = 0;

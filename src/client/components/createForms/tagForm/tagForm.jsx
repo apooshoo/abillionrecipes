@@ -23,16 +23,20 @@ class TagForm extends React.Component {
 
 
     return (
-      <div className="tag-item">
+      <div className="tag-item shadow-sm px-4 py-3 mb-1 bg-white rounded">
 
-        <div>
-            <label htmlFor={"tag-name-input"}>Tag Name: </label>
-            <input id={"tag-name-input"} value={tag.name} onChange={()=>{this.updateTagsInput(tagIndex, "name", event.target.value)}}/>
+        <div className="input-group">
+            <div className="input-group-prepend">
+                <span className="input-group-text">Tag Name: </span>
+            </div>
+            <input type="text" className="form-control" id={"tag-name-input"} value={tag.name} onChange={()=>{this.updateTagsInput(tagIndex, "name", event.target.value)}}/>
         </div>
 
-        <div>
-            <label htmlFor={"tag-display-input"}>Make Public</label>
-            <input id={"tag-display-input"} type={"checkBox"} value={tag.display} onChange={()=>{this.updateTagsInput(tagIndex, "display", !tag.display)}}/>
+        <div className="input-group" style={{position: "relative"}}>
+            <div className="input-group-prepend mr-1">
+                <span className="input-group-text">Make Public: </span>
+            </div>
+            <input id={"tag-display-input"} type="checkBox" style={{width: "40px", height: "40px"}} value={tag.display} onChange={()=>{this.updateTagsInput(tagIndex, "display", !tag.display)}}/>
         </div>
 
       </div>

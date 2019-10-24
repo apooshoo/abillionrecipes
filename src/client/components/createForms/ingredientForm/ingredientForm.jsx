@@ -53,16 +53,20 @@ class IngredientForm extends React.Component {
 
     return (
 
-      <div className="ingredient-item">
+      <div className="ingredient-item shadow-sm p-3 mb-1 bg-white rounded">
 
-        <div>
-            <label htmlFor={"ingredient-name-input"}>Ingredient Name: </label>
-            <input id={"ingredient-name-input"} value={ingredient.name} onChange={()=>{this.updateIngredientsInput(ingredientIndex, "name", event.target.value)}}/>
+        <div className="input-group">
+            <div className="input-group-prepend">
+                <span className="input-group-text">Ingredient Name: </span>
+            </div>
+            <input type="text" className="form-control" id={"ingredient-name-input"} value={ingredient.name} onChange={()=>{this.updateIngredientsInput(ingredientIndex, "name", event.target.value)}}/>
         </div>
 
-        <div>
-            <label htmlFor={"ingredient-amount-input"}>Amount: </label>
-            <input id={"ingredient-amount-input"} value={ingredient.amount} onChange={()=>{this.updateIngredientsInput(ingredientIndex, "amount", event.target.value)}}/>
+        <div className="input-group">
+            <div className="input-group-prepend">
+                <span className="input-group-text">Amount: </span>
+            </div>
+            <input type="text" className="form-control" id={"ingredient-amount-input"} value={ingredient.amount} onChange={()=>{this.updateIngredientsInput(ingredientIndex, "amount", event.target.value)}}/>
         </div>
 
         <div>

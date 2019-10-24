@@ -23,7 +23,7 @@ class InstructionForm extends React.Component {
 
     return (
 
-      <div className="instruction-item">
+      <div className="instruction-item shadow-sm px-4 py-3 mb-1 bg-white rounded">
         <div>
             <label htmlFor={"instruction-input"}>Step {instructionIndex+1}: </label>
             <input id={"instruction-input"} value={instruction} onChange={()=>{this.updateInstructionsInput(instructionIndex, event.target.value)}}/>

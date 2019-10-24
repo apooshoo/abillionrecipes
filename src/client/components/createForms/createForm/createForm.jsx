@@ -139,7 +139,7 @@ class CreateForm extends React.Component {
     //max 4 imgs, then remove upload option
     if ([...this.state.imgsInput].length <= 3){
         return <div>
-                <button id="upload_widget" onClick={()=>this.openWidget(myWidget)}>Upload files</button>
+                <button type="button" className="btn btn-link" id="upload_widget" onClick={()=>this.openWidget(myWidget)}>Upload images (max 4)</button>
               </div>
     };
   }
@@ -178,45 +178,54 @@ class CreateForm extends React.Component {
 
 
     return (
-      <div className="create-form">
-          <div>
-            <label htmlFor={"author-input"}>Author: </label>
-            <input id={"author-input"} value={this.props.username} readOnly/>
-          </div>
+        <div className="row">
+          <div className="create-form col-8 offset-2 col-md-6 offset-md-3">
 
-          <div>
-            <label htmlFor={"title-input"}>Recipe Title: </label>
-            <input id={"title-input"} placeholder={"eg. Mom's Spaghetti"} value={this.state.titleInput} onChange={()=>{this.titleInputHandler(event)}}/>
-          </div>
+              <div className="input-group">
+                <div className="input-group-prepend">
+                    <span className="input-group-text">Author: </span>
+                </div>
+                <input type="text" className="form-control" id={"author-input"} value={this.props.username} readOnly/>
+              </div>
 
-          <div>
-            {imgsInputList}
-          </div>
+              <div className="input-group">
+                <div className="input-group-prepend">
+                    <span className="input-group-text">Recipe Title: </span>
+                </div>
+                <input type="text" className="form-control" id={"title-input"} placeholder={"eg. Mom's Spaghetti"} value={this.state.titleInput} onChange={()=>{this.titleInputHandler(event)}}/>
+              </div>
 
-          {this.createWidget()}
+              <div>
+                {imgsInputList}
+              </div>
 
-          <div>
-            <label htmlFor={"servings-input"}>Serving size: </label>
-            <input id={"servings-input"} placeholder={"eg. 5 pax"} value={this.state.servingsInput} onChange={()=>{this.servingsInputHandler(event)}}/>
-          </div>
+              {this.createWidget()}
 
-          <div>
-            {ingredientsInputList}
-            <FontAwesomeIcon icon="plus" onClick={()=>{this.addIngredient()}} style={{cursor: "pointer"}}/>
-            <span>Add Ingredient</span>
-          </div>
+              <div className="input-group">
+                <div className="input-group-prepend">
+                    <span className="input-group-text">Serving Size: </span>
+                </div>
+                <input type="text" className="form-control" id={"servings-input"} placeholder={"eg. 5 pax"} value={this.state.servingsInput} onChange={()=>{this.servingsInputHandler(event)}}/>
+              </div>
 
-          <div>
-            {instructionsInputList}
-            <FontAwesomeIcon icon="plus" onClick={()=>{this.addInstruction()}} style={{cursor: "pointer"}}/>
-            <span>Add Instruction</span>
-          </div>
+              <div>
+                {ingredientsInputList}
+                <FontAwesomeIcon icon="plus" onClick={()=>{this.addIngredient()}} style={{cursor: "pointer"}}/>
+                <span>Add Ingredient</span>
+              </div>
 
-          <div>
-              <FontAwesomeIcon icon="check" onClick={()=>{this.createAndAddRecipe()}} style={{cursor: "pointer"}}/>
-              <span>Save Recipe</span>
+              <div>
+                {instructionsInputList}
+                <FontAwesomeIcon icon="plus" onClick={()=>{this.addInstruction()}} style={{cursor: "pointer"}}/>
+                <span>Add Instruction</span>
+              </div>
+
+              <div>
+                  <FontAwesomeIcon icon="check" onClick={()=>{this.createAndAddRecipe()}} style={{cursor: "pointer"}}/>
+                  <span>Save Recipe</span>
+              </div>
           </div>
-      </div>
+        </div>
     );
   }
 }
