@@ -78,7 +78,7 @@ class RecipeListItem extends React.Component {
 
 
     return (
-      <div className="col-12 col-sm-6 col-md-4 col-lg-3" key={recipeIndex} style={{height: "350px"}}>
+      <div className="col-12 col-sm-6 col-md-4 col-lg-3 my-2" key={recipeIndex}>
         <div className="card text-center shadow bg-white rounded">
         <div className="card-header" style={{cursor: "pointer"}}>{recipe.title}</div>
             <div className="card-body">
