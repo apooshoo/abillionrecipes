@@ -130,6 +130,176 @@ class Dashboard extends React.Component {
                     "Bring a large pot of water to boil and prepare a large bowl of icy water. Add noodles to boiling water, stirring frequently and adding 1/4 cup fresh water if the water threatens to bubble over, until they are fully cooked but not mushy, 7-12 minutes (depends on how thick your noodles are). Unlike Italian pasta, Japanese noodles shouldn’t be al-dente, but don’t let them get mushy.)",
                     "Drain noodles, transfer to icy water. Briefly and gently rub the noodles with hands to remove some of the starch. Drain from cold water."
                 ]
+            },
+            {
+                title: "Homemade Ice Cream",
+                recipeId: 3,
+                imgs: [
+                    "icecream1",
+                    "icecream2"
+                ],
+                authorId: 1,
+                author: "Jonathan",
+                servings: "6",
+                ingredients: [
+                    {
+                        name: "heavy cream",
+                        amount: "1 3/4 cups",
+                        tags: [{name: "dry", public: false}],
+                    },
+                    {
+                        name: "whole milk",
+                        amount: "1 1/4 cups",
+                        tags: [{name: "wet", public: false}, {name: "milk", public: true}]
+                    },
+                    {
+                        name: "sugar",
+                        amount: "3/4 cups",
+                        tags: [{name: "dry", public: false}]
+                    },
+                    {
+                        name: "fine sea salt",
+                        amount: "1/8 teaspoons",
+                        tags: [{name: "dry", public: false}]
+                    },
+                    {
+                        name: "vanilla extract OR vanilla bean split in half lengthwise",
+                        amount: "1 of either",
+                        tags: [{name: "dry", public: false}]
+                    },
+                    {
+                        name: "OPTIONAL: add-ins: soft brownies, cookies etc",
+                        amount: "2 cups",
+                        tags: [{name: "dry", public: false}]
+                    }
+                ],
+                instructions: [
+                    "Pour 1 cup of the cream into a saucepan and add the sugar, salt. Scrape the seeds of the vanilla bean into the pot and then add the vanilla pod to the pot.",
+                    "Warm the mixture over medium heat, just until the sugar dissolves. Remove from the heat and add the remaining cream, milk, and vanilla. Stir to combine and chill in the refrigerator.",
+                    "When ready to churn, remove the vanilla pod, whisk mixture again and pour into ice cream maker. Churn according to the manufacturer’s instructions.",
+                    "Transfer the finished ice cream to an airtight container and place in the freezer until ready to serve."
+                ]
+            },
+            {
+                title: "mille crepe",
+                recipeId: 4,
+                imgs: [
+                    "mille1",
+                    "mille2",
+                    "mille3"
+                ],
+                authorId: 3,
+                author: "Hannah Williams",
+                servings: "8",
+                ingredients: [
+                    {
+                        name: "butter",
+                        amount: "6 tablespoons",
+                        tags: [],
+                    },
+                    {
+                        name: "milk",
+                        amount: "675 ml",
+                        tags: [{name: "wet", public: false}, {name: "milk", display: true}]
+                    },
+                    {
+                        name: "eggs",
+                        amount: "6",
+                        tags: [{name: "dry", public: false}, {name: "eggs", public: true}]
+                    },
+                    {
+                        name: "flour",
+                        amount: "210 g",
+                        tags: [{name: "dry", public: false}]
+                    },
+                    {
+                        name: "cocoa powder",
+                        amount: "80 g",
+                        tags: [{name: "dry", public: false}]
+                    },
+                    {
+                        name: "sugar",
+                        amount: "7 tablespoons",
+                        tags: [{name: "dry", public: false}]
+                    },
+                    {
+                        name: "whipped cream",
+                        amount: "1 litre",
+                        tags: [{name: "dry", public: false}]
+                    }
+                ],
+                instructions: [
+                    "Make the crepes by melting the butter and allowing it to brown slightly. Set aside.",
+                    "In the same pot, warm the milk. Remove from heat.",
+                    "In a bowl, whisk flour, cocoa powder, and sugar. Mix in eggs.",
+                    "Gradually mix in butter and warm milk. Chill.",
+                    "On a nonstick skillet over medium heat, pour ¼ cup (60 ml) of crepe batter, and tip the pan to cover the entire bottom surface. Cook until bottom surface of crepe begins to brown, then flip.",
+                    "Cool crepe. Repeat until all of the crepe batter is used.",
+                    "Stack crepes on top of each other, with whipped cream between each layer. Once assembled, trim edges for a cleaner look, if desired.",
+                    "Enjoy!"
+                ]
+            },
+            {
+                title: "chocolate chip cookies",
+                recipeId: 5,
+                imgs: [
+                    "cck1",
+                    "cck2"
+                ],
+                authorId: 4,
+                author: "Alvin Zhou",
+                servings: "30 cookies",
+                ingredients: [
+                    {
+                        name: "butter",
+                        amount: "460 g, melted",
+                        tags: [{name: "dry", public: false}],
+                    },
+                    {
+                        name: "brown sugar",
+                        amount: "440 g, packed",
+                        tags: [{name: "dry", public: false}]
+                    },
+                    {
+                        name: "granulated sugar",
+                        amount: "400 g",
+                        tags: [{name: "dry", public: false}]
+                    },
+                    {
+                        name: "eggs",
+                        amount: "4 large",
+                        tags: [{name: "dry", public: false}, {name: "eggs", public: true}]
+                    },
+                    {
+                        name: "vanilla extract",
+                        amount: "1 tablespoon",
+                        tags: [{name: "dry", public: false}]
+                    },
+                    {
+                        name: "all-purpose flour",
+                        amount: "625 g",
+                        tags: [{name: "dry", public: false}]
+                    },
+                    {
+                        name: "baking powder",
+                        amount: "2 teaspoons",
+                        tags: [{name: "dry", public: false}]
+                    },
+                    {
+                        name: "chocolate chips",
+                        amount: "700 g",
+                        tags: [{name: "dry", public: false}]
+                    }
+                ],
+                instructions: [
+                    "Preheat oven to 375°F (190°C).",
+                    "In a large bowl, whisk together the brown sugar, granulated sugar, and melted butter, until evenly combined and light in color.",
+                    "Add in the eggs and vanilla, mixing until smooth.",
+                    "Add the flour and baking powder, folding the mixture until it forms a smooth dough.",
+                    "Fold in the chocolate chips until evenly combined.",
+                    "Using an ice cream scoop, scoop 6 balls of dough onto a baking tray lined with parchment paper.",
+                    "Bake for 12 minutes, then serve!"
+                ]
             }
         ],
         errors: [],
